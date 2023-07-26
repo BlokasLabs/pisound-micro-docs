@@ -1,0 +1,61 @@
+docs_dir: 'docs'
+site_dir: 'static'
+site_name: Pisound Micro Documentation
+site_author: UAB VILNIAUS BLOKAS
+google_analytics: ['UA-44135535-1', 'auto']
+use_directory_urls: true
+theme:
+  name: 'material'
+  favicon: 'favicon.ico'
+  logo: 'images/logo.svg'
+  palette:
+    primary: 'white'
+    accent: 'white'
+  custom_dir: 'blokas-docs-theme'
+site_url: https://blokas.io/pisound-micro/docs/
+extra:
+  ads:
+    pisound: false
+    patchboxos: false
+    midihub: false
+    modep: false
+  discourse: 'https://community.blokas.io/'
+  disqus: 'fake'
+  social:
+    - type: 'github'
+      link: 'https://github.com/BlokasLabs'
+    - type: 'twitter'
+      link: 'https://twitter.com/blokaslabs'
+    - type: 'facebook'
+      link: 'https://www.facebook.com/blokaslabs/'
+repo_name: 'pisound-micro-docs'
+repo_url: 'https://github.com/BlokasLabs/pisound-micro-docs/'
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - toc:
+      permalink: '#'
+  - pymdownx.arithmatex
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist
+  - pymdownx.tilde
+  - footnotes:
+      PLACE_MARKER: '///Footnotes Go Here///'
+
+copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
+
+nav:
+- Getting Started: index.md
+
+plugins:
+  - search
