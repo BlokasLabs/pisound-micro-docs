@@ -55,7 +55,10 @@ markdown_extensions:
 copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
 
 nav:
-- Getting Started: index.md
+  - Getting Started: index.md
+  - libpisoundmicro: libpisoundmicro.md
+  - Sysfs GPIO: sysfs-gpio.md
+  - gpiod: gpiod.md
 
 plugins:
   - search
