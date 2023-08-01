@@ -55,8 +55,8 @@ markdown_extensions:
 copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
 
 nav:
-  - Getting Started: index.md
-  - Sysfs Pisound-Micro: sysfs-pisound-micro.md
+  - Pisound Micro: index.md
+  - Sysfs Interface: sysfs-interface.md
   - libpisoundmicro: libpisoundmicro.md
   - Sysfs GPIO: sysfs-gpio.md
   - gpiod: gpiod.md

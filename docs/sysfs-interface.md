@@ -1,10 +1,12 @@
-# Sysfs Pisound-Micro Interface
+# Sysfs Interface
 
 All of the GPIO I/O functionality of Pisound Micro is accessed through the sysfs `/sys/pisound-micro` tree. It is based around a concept of creating named Elements and assigning them to perform certain functions on the specified GPIO pins. An Element can be a digital I/O control, analog potentiometer, digital encoder or MIDI activity output.
 
 Once an Element is created, it gets its own subdirectory under `/sys/pisound-micro/elements/` and provides a couple of files for reading & writing the value, as well as further configuration, like setting the minimum and maximum values.
 
-`libpisoundmicro` is a library encapsulating all of the available functionality of the sysfs interface in a straightforward C/C++ API with bindings to other languages.
+This page details interacting with the sysfs interface directly and provides a complete reference on the I/O functionalities of Pisound Micro. There's [libpisoundmicro](libpisoundmicro.md), a library encapsulating all of the available functionality of the sysfs interface in a straightforward C/C++ API with bindings to other languages and should be the preferred method for integrating Pisound Micro I/O functions into your own projects, whenever possible.
+
+The first part goes through the practical examples of setting up various kinds of Elements, while the 2nd part is a complete Reference of the sysfs interface.
 
 ## Sysfs /sys/pisound-micro interface
 
@@ -336,7 +338,7 @@ Once the raw value is clamped or wrapped over, the resulting `value` is linearly
 
 Some pseudo code is in order to help understand exactly how the `value` attribute gets calculated:
 
-```c
+```js
 // A temporary variable.
 var v;
 if (value_mode == "wrap") {
@@ -345,9 +347,9 @@ if (value_mode == "wrap") {
     // Can be nothing else but "clamp".
     v = min(max(raw_value, input_min), input_max);
 }
+// Linearly transform 'input' range to 'value' range.
 value = ((v - input_min) * (value_high - value_low))
-        /
-        (input_max - input_min) + value_min;
+        / (input_max - input_min) + value_min;
 ```
 
 As the name implies, `input_min` must be <= `input_max` - storing values to these attributes that don't meet this rule will implicitly result in swapping the boundaries, so that the condition remains true at all times.
