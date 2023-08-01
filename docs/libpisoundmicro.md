@@ -6,7 +6,7 @@ Once an Element is created, it gets its own subdirectory under `/sys/pisound-mic
 
 `libpisoundmicro` is a library encapsulating all of the available functionality of the sysfs interface in a straightforward C/C++ API with bindings to other languages.
 
-## Sysfs /sys/pisoundmicro interface
+## Sysfs /sys/pisound-micro interface
 
 ### Quick Start
 
@@ -74,7 +74,7 @@ echo switch > /sys/pisound-micro/unsetup
 
 #### Analog Input / Potentiometer
 
-By now a pattern should have emerged - to get analog readings between 0V (GND) and 3.3V, you have to set up an `analog_in` typed Element, using a pin with analog reading functionality. It provides 10 bit resolution - values between 0 and 1023. Additionally, for convenience, it's possible to limit the input range to certain values if you're not interested in the entire range using `input_low` and `input_high` sysfs attributes, as well as remap the output value range to values that fit your application, including reversing the polarity, using `value_low` and `value_high` sysfs attributes. Here's a quick example project - take any 3 pin single channel potentiometer you have, connect its 1st pin to GND, the 2nd to pin B23 and the 3rd to +3V3. A classic voltage divider circuit. Then:
+By now a pattern should have emerged - to get analog readings between 0V (GND) and 3.3V, you have to set up an `analog_in` typed Element, using a pin with analog reading functionality. It provides 10 bit resolution - values between 0 and 1023. Additionally, for convenience, it's possible to limit the input range to certain values if you're not interested in the entire range using `input_min` and `input_max` sysfs attributes, as well as remap the output value range to values that fit your application, including reversing the polarity, using `value_low` and `value_high` sysfs attributes. Here's a quick example project - take any 3 pin single channel potentiometer you have, connect its 1st pin to GND, the 2nd to pin B23 and the 3rd to +3V3. A classic voltage divider circuit. Then:
 
 ```bash
 # Let's create an analog_in Element named 'pot' on pin B23:
@@ -100,9 +100,9 @@ echo 0 > /sys/pisound-micro/elements/pot/value_high
 # Now let's say for one reason or another we're only interested in
 # the first half of voltage value range (0V ~ 1.65V), we want any
 # value higher than 1.65V to be clamped to maximum. We can get such
-# readings by adjusting the input_low and input_high attributes:
-echo 0 > /sys/pisound-micro/elements/pot/input_low
-echo 511 > /sys/pisound-micro/elements/pot/input_high
+# readings by adjusting the input_min and input_max attributes:
+echo 0 > /sys/pisound-micro/elements/pot/input_min
+echo 511 > /sys/pisound-micro/elements/pot/input_max
 
 # Now you should get only 1023 readings for the top half, and readings
 # between 0 and 1023 for the bottom half. The 0-511 range is mapped to
@@ -125,7 +125,7 @@ Quadrature encoders are handled similarly to analog inputs described above, they
 echo enc encoder B03 pull_up B04 pull_up > /sys/pisound-micro/setup
 
 # Let's reduce the maximum value range to 23:
-echo 23 > /sys/pisound-micro/elements/enc/input_high
+echo 23 > /sys/pisound-micro/elements/enc/input_max
 echo 23 > /sys/pisound-micro/elements/enc/value_high
 
 # Now start monitoring the value:
@@ -202,3 +202,156 @@ amidi -p hw:pisound-micro -S "90 40 30"
 For observing MIDI input, either have a MIDI connector hooked up to the MIDI input pins and send it some data using external MIDI devices, or if there's no connector hooked up, you may temporarily short two pairs of pins A21 with A24 and A23 with A22, then produce MIDI output using the `amidi` command above, the produced data should be sent to Pisound Micro's input and should have the activity indicated on the LED connected to B03.
 
 ### Reference
+
+#### Types
+
+There's a couple of types in use in the sysfs interface, the below descriptions will refer to this table:
+
+| Type Name {width="15%"}| Values {width="15%}| Description |
+| --------- | ---------- | ------ |
+| `name`    | Text characters | The maximum length in bytes is 63, the '`/`' character is not allowed. The string is null-terminated. |
+| `pin`     | `A27` - `A32`, `B03` - `B18`, `B23` - `B34`, `B37` - `B39` | The GPIO pin on one of Pisound Micro's extension headers, consisting of 3 symbols - A or B letter, indicating which Pisound Micro header it refers to and 2 digit decimal number, indicating the pin position on the header. |
+| `pull`    | `pull_up`, `pull_down`, `pull_none` | The GPIO pin pull through internal ~40kOhm resistor - either pulling up to +3.3V, down to GND or pull resistor disabled entirely. |
+| `dir`     | `input`, `output` | The GPIO pin direction. |
+| `bool`    | `y`, `1`, `on` for True<br>`n`, `0`, `off` for False | True (High) or False (Low). |
+| `int`     | A number between -2147483648 and 2147483647 | A 32 bit integer number, used for value and its high and low range boundaries. It can be expressed as decimal, hexadecimal (if prefixed by `0x`) or octal (`0` prefix) |
+| `element` | `gpio`, `analog_in`, `encoder`, `activity_led` | The element type. |
+| `activity` | `activity_midi_input`, `activity_midi_output` | Activity kinds. |
+| `value_mode` | `clamp`, `wrap` | The behavior of a value of an encoder, whether it stays at lowest or highest value (`clamp`) or wraps over to the other end (`wrap`) |
+
+#### /sys/pisound-micro/setup
+
+The write-only `setup` sysfs file is for setting up new Pisound Micro Elements. The file expects a single line to be written to it with the description of an Element you want created. If writing succeeds (return/exit code is 0), a new Element with the given name appears under `/sys/pisound-micro/elements/` tree, otherwise, an error code is returned. `errno` from `moreutils` can be used to get hints of what went wrong. For example, `EINVAL` error code indicates that there was something wrong with the request, like syntax error, typo, non existent pin, unsupported function on the provided pin, etc... `EBUSY` indicates, that the pin is already in use either as an Element, or already used by `/sys/class/gpio` interface or `libgpio`. `EEXIST` indicates, that there's already an Element with the provided name, but set up differently. Trying to setup an already existing element with the exactly the same configuration shall succeed.
+
+The below section lists all the possible `setup` requests that should be written into `/sys/pisound-micro/setup`. The text enclosed in `<` and `>` brackets refer to required types defined in the above table and should be replaced by one of the possible values, the brackets themselves are not needed in the actual command. Lines that start with `#` indicate a comment.
+
+##### Digital Output
+
+```
+# Name    Type  Pin    Direction  Output Value
+  <name>  gpio  <pin>  output     <bool>
+
+# Example:
+# echo signal gpio B03 output 1 > /sys/pisound-micro/setup
+#
+# Sets up a digital output Element named 'signal'
+# on pin B03 and sets initial output to high.
+```
+
+##### Digital Input
+
+```
+# Name    Type  Pin    Direction  Pull
+  <name>  gpio  <pin>  input      <pull>
+
+# Example:
+# echo button gpio B03 input pull_up > /sys/pisound-micro/setup
+#
+# Sets up a digital input Element named 'button'
+# on pin B03 with pull-up to +3.3V enabled.
+```
+
+##### Analog Input
+
+```
+# Name    Type       Pin
+  <name>  analog_in  <pin>
+
+# Example:
+# echo pot gpio B23 > /sys/pisound-micro/setup
+#
+# Sets up an analog input Element named 'pot'
+# on pin B23.
+```
+
+##### Encoder Input
+
+```
+# Name    Type     Pin A  Pull A  Pin B  Pull B
+  <name>  encoder  <pin>  <pull>  <pin>  <pull>
+
+# Example:
+# echo enc encoder B03 pull_up B04 pull_up > /sys/pisound-micro/setup
+#
+# Sets up an encoder input Element named 'enc'
+# on pins B03 and B04 with pull-ups to +3.3V enabled.
+```
+
+##### Activity Output
+
+```
+# Name    Type      Pin    Activity
+  <name>  activity  <pin>  <activity>
+
+# Example:
+# echo led activity B03 activity_midi_input > /sys/pisound-micro/setup
+#
+# Sets up an activity monitor Element named 'led'
+# on pin B03.
+```
+
+#### /sys/pisound-micro/unsetup
+
+The write-only `unsetup` sysfs file is for releasing the Pisound Micro Elements. Once an Element is released, the pins used by it go back to the default Hi-Z state.
+
+The only content of `unsetup` request should be the target Element's name, the exact same value that was used during the `setup`. If it succeeds, the 0 (success) code is returned. If there was an error, `errno` from `moreutils` can be used to make sense of it. For example, you may get a `ENOENT` error if the Element with the specified name was not found.
+
+```
+<name>
+
+# Example:
+# echo led > /sys/pisound-micro/unsetup
+#
+# Unsetups the 'led' Element, as previously
+# set up in the Activity Output example.
+```
+
+#### /sys/pisound-micro/elements/*
+
+The Elements tree contains all the successfully set up Elements and gives access to their attributes. Encoder and Analog Inputs provide additional attributes to customize the controls such as the input and value ranges. All of the Element's attributes are described below:
+
+| Attribute {width="17%"}| R/W | Applies to | Description |
+| --------------- | --- | ---------- | ----------- |
+| `type`          | R   | All        | Contains the read only type string of the Element. |
+| `value`         | R/W | All, except Activity Elements | The current value of the Element. If it's an output element, such as a digital output, writing to this attribute is used to change the output level. It can also be useful to update the value of an Encoder Element from your software, to keep external changes that can occur in sync, to avoid skips and jumps when the Encoder is manipulated. |
+| `pin`           | R   | All        | The pin used by the Element |
+| `pin_name`      | R   | All        | The name of the pin used by the Element |
+| `pin_b`         | R   | Encoder    | The 2nd pin used by the Encoder. |
+| `pin_b_name`    | R   | Encoder    | The name of the 2nd pin used by the Encoder. |
+| `activity_type` | R   | Activity   | The type of activity being monitored. |
+| `input_min`     | R/W | Encoder & Analog Input | See below section. |
+| `input_max`     | R/W | Encoder & Analog Input | See below section. |
+| `value_low`     | R/W | Encoder & Analog Input | See below section. |
+| `value_high`    | R/W | Encoder & Analog Input | See below section. |
+| `value_mode`    | R/W | Encoder    | See below section. |
+| `direction`     | R   | GPIO       | The direction of the GPIO Element. |
+| `gpio_export`   | W   | GPIO       | Writing anything into this attribute exports its equivalent through `/sys/class/gpio`. |
+| `gpio_unexport` | W   | GPIO       | Writing anything into this attribute unexports its equivalent in `/sys/class/gpio`. |
+
+#### Encoder and Analog Input Values
+
+Encoders and Analog Inputs both have an internal raw value they keep track of, which undergoes 2 stages of transformation to reach the final `value`. The `input_min` and `input_max` range together with `value_mode` define how the internal raw value of an Analog Input (which is between 0 and 1023) or Encoder (incremented or decremented by 1 from previous raw value) is treated. The `value_mode` for Analog Inputs is implicitly `clamp` and can't be changed. For Encoders, you may select `clamp` (default) which limits and does not allow the value to roll over to the other side if it reaches either the `input_min` or `input_max`, or `wrap` which automatically sets the value to the other input range boundary once it goes outside of range.
+
+Once the raw value is clamped or wrapped over, the resulting `value` is linearly mapped into the `value_low` and `value_high` range from [`input_low`;`input_high`] range.
+
+Some pseudo code is in order to help understand exactly how the `value` attribute gets calculated:
+
+```c
+// A temporary variable.
+var v;
+if (value_mode == "wrap") {
+    v = ((raw_value - input_min) % (input_max - input_min)) + input_min;
+} else {
+    // Can be nothing else but "clamp".
+    v = min(max(raw_value, input_min), input_max);
+}
+value = ((v - input_min) * (value_high - value_low))
+        /
+        (input_max - input_min) + value_min;
+```
+
+As the name implies, `input_min` must be <= `input_max` - storing values to these attributes that don't meet this rule will implicitly result in swapping the boundaries, so that the condition remains true at all times.
+
+On the other hand, `value_low` and `value_high` range boundaries don't have to follow the same rule, therefore, it is possible to invert the polarity of a control if `value_low` is > `value_high`.
+
+Modifying the value ranges will automatically adjust the internal raw value and `value` attribute accordingly.
