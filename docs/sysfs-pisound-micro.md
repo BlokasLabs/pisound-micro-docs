@@ -1,4 +1,4 @@
-# libpisoundmicro
+# Sysfs Pisound-Micro Interface
 
 All of the GPIO I/O functionality of Pisound Micro is accessed through the sysfs `/sys/pisound-micro` tree. It is based around a concept of creating named Elements and assigning them to perform certain functions on the specified GPIO pins. An Element can be a digital I/O control, analog potentiometer, digital encoder or MIDI activity output.
 
