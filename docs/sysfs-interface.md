@@ -27,7 +27,7 @@ First let's get acquainted by going through some quick examples. Let's hook up a
 # controlling pin B03 and initially setting it to high output.
 echo my_led gpio B03 output 1 > /sys/pisound-micro/setup
 
-# As both of the LEDs pins are at high voltage, no current is flowing
+# As both of the LED's pins are at high voltage, no current is flowing
 # and the LED is off.
 
 # Now let's make it light up by setting the GPIO low:
@@ -47,7 +47,7 @@ After you're done, disconnect the LED and the resistor.
 
 #### Digital Input
 
-Similarly, you may read out on and off state on any of the GPIO line of Pisound Micro hook up a momentary or toggle/slide switch to pin B03 and the other side of the switch to GND (pin B02) or just connect one end of a jumper cable to pin B03 and be prepared to short the other end to GND to see different input states. Here's how to read it out:
+Similarly, you may read the and off state of any of the GPIO lines of Pisound Micro. Hook up a momentary or toggle/slide switch to pin B03 and the other side of the switch to GND (pin B02) or just connect one end of a jumper cable to pin B03 and be prepared to short the other end to GND to see different input states. Here's how to read Digital Input:
 
 ```bash
 # Let's create a GPIO input Element named 'switch',
@@ -59,16 +59,17 @@ cat /sys/pisound-micro/elements/switch/value
 
 # You'll see it output 1, if the circuit is open,
 # and 0 if pin B03 is shorted to GND.
+# Feel free to rerun the above cat command.
 
-# Let's try that again a couple of times, but this time let's use
-# our `pollgpio` utility to monitor the value as it changes.
+# This time let's use our `pollgpio` utility to monitor
+# the value as it changes.
 pollgpio /sys/pisound-micro/elements/switch/value
 
-# Now close the circuit on B03 and you should see the latest
+# Now close or open the circuit on B03 and you should see the latest
 # value printed in a new line every time it changes.
 
-# Finally let's release the 'switch' Element now, so the B03 pin can be used
-# for other purposes.
+# Finally let's release the 'switch' Element now, so the pin B03
+# can be used for other purposes.
 
 # Hit Ctrl+C to stop pollgpio, then:
 echo switch > /sys/pisound-micro/unsetup
@@ -94,7 +95,7 @@ pollgpio /sys/pisound-micro/elements/pot/value
 
 # Let's say we're not satisfied with the change direction.
 # Not so quick! There's no need to physically swap pins 1
-# and 3, # we can change the direction simply by reconfiguring
+# and 3, we can change the direction simply by reconfiguring
 # the value_low and value_high attributes:
 echo 1023 > /sys/pisound-micro/elements/pot/value_low
 echo 0 > /sys/pisound-micro/elements/pot/value_high
@@ -106,13 +107,13 @@ echo 0 > /sys/pisound-micro/elements/pot/value_high
 echo 0 > /sys/pisound-micro/elements/pot/input_min
 echo 511 > /sys/pisound-micro/elements/pot/input_max
 
-# Now you should get only 1023 readings for the top half, and readings
-# between 0 and 1023 for the bottom half. The 0-511 range is mapped to
-# 0 - 1023 range. To make it map directly to the values you used to get
-# just previously, we should change 1023 of value_low to 511:
+# Now, when the pot is within the top half, you should be getting value
+# 1023, and values between 0 and 1023 for the bottom half. The 0-511 range
+# gets scaled to 0 - 1023 range. To make it map directly to the values you
+# used to get just previously, we should change 1023 of value_low to 511:
 echo 511 > /sys/pisound-micro/elements/pot/value_low
 
-# Let's stop pollgpio on original terminl and release the Element:
+# Let's stop pollgpio in the original terminal and release the Element:
 # Hit Ctrl+C while the pollgpio terminal is active and execute:
 echo pot > /sys/pisound-micro/unsetup
 ```
@@ -126,17 +127,14 @@ Quadrature encoders are handled similarly to analog inputs described above, they
 # enabled:
 echo enc encoder B03 pull_up B04 pull_up > /sys/pisound-micro/setup
 
-# Let's reduce the maximum value range to 23:
-echo 23 > /sys/pisound-micro/elements/enc/input_max
-echo 23 > /sys/pisound-micro/elements/enc/value_high
-
 # Now start monitoring the value:
 pollgpio /sys/pisound-micro/elements/enc/value
 
 # You should first see 0, spinning it one direction should increase
 # the values, the other direction should decrease the values, but
-# it shouldn't go below 0 or above 23, as the default value_mode is
-# to clamp the values. Let's give wrap mode a try, in another terminal
+# it shouldn't go below 0 (default minimum) or above 23 (default maximum),
+# as the default value_mode is to clamp the values. Let's give wrap mode
+# a try, in another terminal
 # session, do:
 echo wrap > /sys/pisound-micro/elements/enc/value_mode
 
@@ -189,43 +187,51 @@ echo enc > /sys/pisound-micro/unsetup
 
 #### MIDI Activity LED
 
-This is a simple automatic output Element, either indicating activity on MIDI input or output. First, connect two single color LEDs, one using signal line B03, the other B04, in the following way - the LED's anode (+) should be connected through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet) to +3V3 (pin B01), and the cathode (-) pin should be connected to one of aforementioned GPIO lines. Then set them up:
+This is a simple automatic output Element, indicating activity on either MIDI input or output. First, connect two single color LEDs, one using signal line B03, the other B04, in the following way - the LED's anode (+) should be connected through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet) to +3V3 (pin B01), and the cathode (-) pin should be connected to one of aforementioned GPIO lines. Then set them up:
 
 ```bash
 echo act_in activity_midi_in B03 > /sys/pisound-micro/setup
 echo act_out activity_midi_out B04 > /sys/pisound-micro/setup
-
-# Produce some MIDI output:
-amidi -p hw:pisound-micro -S "90 40 30"
-
-# You should see the activty indicated on the LED connected to B04.
 ```
 
-For observing MIDI input, either have a MIDI connector hooked up to the MIDI input pins and send it some data using external MIDI devices, or if there's no connector hooked up, you may temporarily short two pairs of pins A21 with A24 and A23 with A22, then produce MIDI output using the `amidi` command above, the produced data should be sent to Pisound Micro's input and should have the activity indicated on the LED connected to B03.
+To see MIDI output activity on pin B04, send some events:
+
+```bash
+amidi -p hw:pisound-micro -S "90 40 30"
+```
+
+To observe MIDI input, either have a MIDI connector hooked up to the MIDI input pins and send it some data using external MIDI devices, or if there's no connector hooked up, you may temporarily short two pairs of pins A21 with A24 and A23 with A22, then produce MIDI output using the `amidi` command above, the produced data should be sent to Pisound Micro's input and should have the activity indicated on the LED connected to B03.
+
+Finally unsetup the elements:
+
+```bash
+echo act_in > /sys/pisound-micro/unsetup
+echo act_out > /sys/pisound-micro/unsetup
+```
 
 ### Reference
 
 #### Types
 
-There's a couple of types in use in the sysfs interface, the below descriptions will refer to this table:
+There's a couple of types in use in the sysfs interface, the further sections will refer to this table:
 
 | Type Name {width="15%"}| Values {width="15%}| Description |
 | --------- | ---------- | ------ |
-| `name`    | Text characters | The maximum length in bytes is 63, the '`/`' character is not allowed. The string is null-terminated. |
-| `pin`     | `A27` - `A32`, `B03` - `B18`, `B23` - `B34`, `B37` - `B39` | The GPIO pin on one of Pisound Micro's extension headers, consisting of 3 symbols - A or B letter, indicating which Pisound Micro header it refers to and 2 digit decimal number, indicating the pin position on the header. |
-| `pull`    | `pull_up`, `pull_down`, `pull_none` | The GPIO pin pull through internal ~40kOhm resistor - either pulling up to +3.3V, down to GND or pull resistor disabled entirely. |
+| `name`    | Text characters | The maximum length in bytes is 63, the '`/`' character is not allowed. |
+| `pin`     | `A27` - `A32`, `B03` - `B18`, `B23` - `B34`, `B37` - `B39` | The GPIO pin on one of Pisound Micro's extension headers, consisting of 3 symbols - A or B letter, indicating which Pisound Micro header it refers to, and 2 digit decimal number, indicating the pin position on the header. |
+| `pull`    | `pull_up`, `pull_down`, `pull_none` | The GPIO pin pull type, either pulling up to +3.3V, down to GND or pull resistor is disabled entirely. |
 | `dir`     | `input`, `output` | The GPIO pin direction. |
 | `bool`    | `y`, `1`, `on` for True<br>`n`, `0`, `off` for False | True (High) or False (Low). |
-| `int`     | A number between -2147483648 and 2147483647 | A 32 bit integer number, used for value and its high and low range boundaries. It can be expressed as decimal, hexadecimal (if prefixed by `0x`) or octal (`0` prefix) |
+| `int`     | A number between -2147483648 and 2147483647 | A 32 bit integer number, used for value and its high and low range boundaries. It can be expressed in base of decimal, hexadecimal (if prefixed by `0x`) or octal (`0` prefix). |
 | `element` | `gpio`, `analog_in`, `encoder`, `activity_led` | The element type. |
 | `activity` | `activity_midi_input`, `activity_midi_output` | Activity kinds. |
-| `value_mode` | `clamp`, `wrap` | The behavior of a value of an encoder, whether it stays at lowest or highest value (`clamp`) or wraps over to the other end (`wrap`) |
+| `value_mode` | `clamp`, `wrap` | The behavior of a value of an encoder, whether it stays at lowest or highest value (`clamp`) or wraps over to the other end (`wrap`). |
 
 #### /sys/pisound-micro/setup
 
-The write-only `setup` sysfs file is for setting up new Pisound Micro Elements. The file expects a single line to be written to it with the description of an Element you want created. If writing succeeds (return/exit code is 0), a new Element with the given name appears under `/sys/pisound-micro/elements/` tree, otherwise, an error code is returned. `errno` from `moreutils` can be used to get hints of what went wrong. For example, `EINVAL` error code indicates that there was something wrong with the request, like syntax error, typo, non existent pin, unsupported function on the provided pin, etc... `EBUSY` indicates, that the pin is already in use either as an Element, or already used by `/sys/class/gpio` interface or `libgpio`. `EEXIST` indicates, that there's already an Element with the provided name, but set up differently. Trying to setup an already existing element with the exactly the same configuration shall succeed.
+The write-only `setup` sysfs file is for setting up new Pisound Micro Elements. The file expects a single line to be written to it with the description of an Element you want created. If writing succeeds (return/exit code is 0), a new Element with the given name appears under `/sys/pisound-micro/elements/` tree, otherwise, an error code is returned. `errno` from `moreutils` can be used to get hints of what went wrong. For example, `EINVAL` error code indicates that there was something wrong with the request, like syntax error, typo, non-existent pin, unsupported function on the provided pin, etc... `EBUSY` indicates, that the pin is already in use either as an Element, or already used by `/sys/class/gpio` interface or `libgpio`. `EEXIST` indicates, that there's already an Element with the provided name, but set up differently. Trying to setup an already existing element with the exactly the same configuration shall succeed.
 
-The below section lists all the possible `setup` requests that should be written into `/sys/pisound-micro/setup`. The text enclosed in `<` and `>` brackets refer to required types defined in the above table and should be replaced by one of the possible values, the brackets themselves are not needed in the actual command. Lines that start with `#` indicate a comment.
+The below sections list all the possible `setup` requests that can be written into `/sys/pisound-micro/setup`. The text enclosed in `<` and `>` brackets refer to required types defined in the above table and should be replaced by one of the possible values, the brackets themselves are not needed in the actual command. Lines that start with `#` indicate a comment.
 
 ##### Digital Output
 
@@ -334,13 +340,12 @@ The Elements tree contains all the successfully set up Elements and gives access
 
 Encoders and Analog Inputs both have an internal raw value they keep track of, which undergoes 2 stages of transformation to reach the final `value`. The `input_min` and `input_max` range together with `value_mode` define how the internal raw value of an Analog Input (which is between 0 and 1023) or Encoder (incremented or decremented by 1 from previous raw value) is treated. The `value_mode` for Analog Inputs is implicitly `clamp` and can't be changed. For Encoders, you may select `clamp` (default) which limits and does not allow the value to roll over to the other side if it reaches either the `input_min` or `input_max`, or `wrap` which automatically sets the value to the other input range boundary once it goes outside of range.
 
-Once the raw value is clamped or wrapped over, the resulting `value` is linearly mapped into the `value_low` and `value_high` range from [`input_low`;`input_high`] range.
+Once the raw value is clamped or wrapped over, the resulting `value` is linearly mapped into the `value_low` and `value_high` range from [`input_min`;`input_max`] range.
 
 Some pseudo code is in order to help understand exactly how the `value` attribute gets calculated:
 
 ```js
-// A temporary variable.
-var v;
+var v; // A temporary variable.
 if (value_mode == "wrap") {
     v = ((raw_value - input_min) % (input_max - input_min)) + input_min;
 } else {
@@ -352,7 +357,7 @@ value = ((v - input_min) * (value_high - value_low))
         / (input_max - input_min) + value_min;
 ```
 
-As the name implies, `input_min` must be <= `input_max` - storing values to these attributes that don't meet this rule will implicitly result in swapping the boundaries, so that the condition remains true at all times.
+As the name implies, `input_min` must be <= `input_max` - this condition is ensured at all times, implicitly swapping the `input_min` and `input_max` as they are stored if needed.
 
 On the other hand, `value_low` and `value_high` range boundaries don't have to follow the same rule, therefore, it is possible to invert the polarity of a control if `value_low` is > `value_high`.
 
