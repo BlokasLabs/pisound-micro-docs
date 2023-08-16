@@ -42,7 +42,7 @@ The main API header to include is [`pisound-micro.h` todo](https://github.com/){
 
 Link with `-lpisoundmicro`.
 
-The library uses `upisnd_` prefix for every C function and type exposed by it.
+The library uses `upisnd_` prefix for every C function and type exposed by it. You can find the C reference documentation [here](doxygen c todo){target=_blank}.
 
 ### Init
 
@@ -106,9 +106,9 @@ See [here](doxygen docs todo){target=_blank} for a working basic C example.
 
 The C++ API of libpisoundmicro simply wraps the C APIs into object oriented classes, so it's recommended to go through [C](libpisoundmicro.md#c) section before continuing. The C++ API also provides a helper class to help with the library's initialization and deinitialization. The Element reference counts are tied to C++ objects' lifetime, if using pure C++ API, it is not necessary to manually ref and unref `upisnd_element_ref_t` handles.
 
-Include `<pisound-micro.h>` to access the libpisoundmicro APIs, link your program with `-lpisoundmicro`.
+Just like for C, include `<pisound-micro.h>` to access the libpisoundmicro APIs and link your program with `-lpisoundmicro`.
 
-All of the C++ API is within the `upisnd::` namespace. It also makes use of some C types, defined in global scope, with `upisnd_` prefix.
+All of the C++ API is within the `upisnd::` namespace. It also makes use of some C types, defined in global scope, with `upisnd_` prefix. You can find the C++ reference documentation [here](doxygen c++ todo){target=_blank}.
 
 ### Init and Uninit
 
@@ -130,9 +130,17 @@ See [here](doxygen docs todo){target=_blank} for a working basic C++ example.
 
 ## Python
 
-The Python wrapper is automatically generated from [C](libpisoundmicro.md#c) and [C++](libpisoundmicro.md#c_1) headers using SWIG, pretty much everything in C and C++ sections applies to Python, the APIs are all the same, just have to be accessed in Python syntax.
+The Python wrapper is automatically generated from [C](libpisoundmicro.md#c) and [C++](libpisoundmicro.md#c_1) headers using SWIG, pretty much everything in C and C++ sections applies to Python, the APIs are all the same, just have to be accessed in Python 3 syntax.
 
 The only significant difference is that the libpisoundmicro is implicitly initialized upon importing the `pypisoundmicro` library.
+
+The recommended way to import the `pypisoundmicro` library is:
+
+```python
+from pypisoundmicro import *
+```
+
+This brings in all of the APIs into the global namespace.
 
 ### An Example
 

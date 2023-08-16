@@ -56,10 +56,11 @@ copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
 
 nav:
   - Pisound Micro: index.md
+  - Pisound Micro Mapper: pisound-micro-mapper.md
   - Sysfs Interface: sysfs-interface.md
   - libpisoundmicro: libpisoundmicro.md
   - Sysfs GPIO: sysfs-gpio.md
-  - gpiod: gpiod.md
+  - gpiod & libpgiod: gpiod-libgpiod.md
 
 plugins:
   - search

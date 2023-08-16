@@ -33,24 +33,26 @@ There's multiple standardized ways of accessing the GPIOs provided by Pisound Mi
 
 You are not restricted to sticking only to one particular method of use - you can mix and match them as necessary, as long as you're not accessing the same pins in different ways at the same time.
 
+### Pisound Micro Mapper
+
+Pisound Micro Mapper lets you write up a json config to define the connected controls to Pisound Micro's I/O pins and map them MIDI messages, OSC messages, or map them directly to ALSA mixer controls such as playback volume. A single control can even be mapped to multiple destinations, and encoders values can also be adjusted according to changes in software, so there's no skips. See [pisound-micro-mapper.md](Pisound Micro Mapper) for more details.
+
 ### libpisoundmicro & Sysfs /sys/pisound-micro
 
-The Pisound Micro kernel module exposes all of the Pisound Micro I/O functionalities, including analog and encoder inputs, through a special location in `/sys/pisound-micro` - as it is all exposed through file system, regular file utilities and commands such as `echo` and `cat` can be used for configuring the Pisound Micro, as well as any file system APIs / functionality available in your software / language of choice.
+The Pisound Micro kernel module exposes all of the Pisound Micro I/O functionalities, including analog and encoder inputs, through a special location in `/sys/pisound-micro` - as it is all exposed through file system, regular file utilities and commands such as `echo` and `cat` can be used for configuring the Pisound Micro, as well as any file system APIs / functionality available in your software / language of choice. See [Sysfs Interface](sysfs-interface.md) for more information.
 
-To make integration to new or existing programs quick and easy, there's `libpisoundmicro` C/C++ library with bindings to other languages such as Python that exposes all the same functionality via a simple to use API.
-
-See [libpisoundmicro](libpisoundmicro.md) for more information.
+To make integration to new or existing programs quick and easy, there's `libpisoundmicro` C/C++ library with bindings to other languages such as Python that exposes all the same functionality via a simple to use API. See [libpisoundmicro](libpisoundmicro.md) for more information.
 
 ### Sysfs /sys/class/gpio
 
-Even though this method is deprecated in favor of /dev/gpiochip* character devices and gpiod / libgpio since Linux kernel 4.8, anyone who's worked with GPIOs and Linux has come across it. It provides a simple file system tree configurable by file utilities like `echo` and `cat`, as well as file system APIs to manipulate the state of the GPIO pins.
+Even though this method is deprecated in favor of /dev/gpiochip* character devices and gpiod / libgpiod since Linux kernel 4.8, anyone who's worked with GPIOs and Linux has come across it. It provides a simple file system tree configurable by file utilities like `echo` and `cat`, as well as file system APIs to manipulate the state of the GPIO pins.
 
 This method only allows using the Pisound Micro pins as digital I/O.
 
 See [Sysfs GPIO](sysfs-gpio.md) for more details on `/sys/class/gpio` usage.
 
-### /dev/gpiochip* / gpiod / libgpio
+### /dev/gpiochip* / gpiod / libgpiod
 
-The spiritual successor of `/sys/class/gpio` - exposing the digital I/O functionality through a character device and providing a more flexible way of configuring GPIOs through `ioctl` system calls. Fortunately, there's `gpiod` package as well as `libgpio` that abstract all the tricky details into a set of utility programs and easy to use C/C++ APIs with bindings to other languages.
+The spiritual successor of `/sys/class/gpio` - exposing the digital I/O functionality through a character device and providing a more flexible way of configuring GPIOs through `ioctl` system calls. Fortunately, there's `gpiod` package as well as `libgpiod` that abstract all the tricky details into a set of utility programs and easy to use C/C++ APIs with bindings to other languages.
 
-Some utilities from `gpiod` of particular interest are `gpiodetect`, `gpioinfo`, `gpioget`, `gpioset` and `gpiomon`. See [gpiod](gpiod.md) for more details.
+Some utilities from `gpiod` of particular interest are `gpiodetect`, `gpioinfo`, `gpioget`, `gpioset` and `gpiomon`. See [gpiod](gpiod-libgpiod.md) for more details.
