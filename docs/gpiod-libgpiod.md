@@ -109,7 +109,7 @@ event:  RISING EDGE offset: 6 timestamp: [   15275.798515492]
 
 ## libgpiod
 
-Fully documenting the powerful `libgpiod` library upon which the above utilities are built upon is a little bit out of the scope for Pisound Micro's docs, but this won't stop us from getting you on the right track and making you comfortable.
+Fully documenting the powerful `libgpiod` library upon which the above utilities are built is a little bit out of the scope for Pisound Micro's docs, but this won't stop us from getting you on the right track and making you comfortable.
 
 ### Prerequisities
 

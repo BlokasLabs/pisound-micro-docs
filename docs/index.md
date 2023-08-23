@@ -31,11 +31,13 @@ Below you'll find a table listing GPIO pin ranges (inclusive) and their function
 
 There's multiple standardized ways of accessing the GPIOs provided by Pisound Micro. This section here is just an overview of the methods, each of them is covered in more depth in the dedicated pages.
 
+It's not necessary to read through and understand all of them though, you may stick with Pisound Micro Mapper to achieve great things! Each access method is listed from the easiest to use to the more complex ones.
+
 You are not restricted to sticking only to one particular method of use - you can mix and match them as necessary, as long as you're not accessing the same pins in different ways at the same time.
 
 ### Pisound Micro Mapper
 
-Pisound Micro Mapper lets you write up a json config to define the connected controls to Pisound Micro's I/O pins and map them MIDI messages, OSC messages, or map them directly to ALSA mixer controls such as playback volume. A single control can even be mapped to multiple destinations, and encoders values can also be adjusted according to changes in software, so there's no skips. See [pisound-micro-mapper.md](Pisound Micro Mapper) for more details.
+Pisound Micro Mapper lets you write up a json config to define the connected controls to Pisound Micro's I/O pins and map them to MIDI messages, OSC messages, or map them directly to ALSA mixer controls such as playback volume. A single control can even be mapped to multiple destinations, and encoder values can also be synced to changes in software, so there's no jumps. See [Pisound Micro Mapper](pisound-micro-mapper.md) for more details.
 
 ### libpisoundmicro & Sysfs /sys/pisound-micro
 
@@ -54,5 +56,7 @@ See [Sysfs GPIO](sysfs-gpio.md) for more details on `/sys/class/gpio` usage.
 ### /dev/gpiochip* / gpiod / libgpiod
 
 The spiritual successor of `/sys/class/gpio` - exposing the digital I/O functionality through a character device and providing a more flexible way of configuring GPIOs through `ioctl` system calls. Fortunately, there's `gpiod` package as well as `libgpiod` that abstract all the tricky details into a set of utility programs and easy to use C/C++ APIs with bindings to other languages.
+
+This method only allows using the Pisound Micro pins as digital I/O.
 
 Some utilities from `gpiod` of particular interest are `gpiodetect`, `gpioinfo`, `gpioget`, `gpioset` and `gpiomon`. See [gpiod](gpiod-libgpiod.md) for more details.
