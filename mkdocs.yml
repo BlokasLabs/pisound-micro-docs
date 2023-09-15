@@ -33,6 +33,7 @@ repo_url: 'https://github.com/BlokasLabs/pisound-micro-docs/'
 markdown_extensions:
   - admonition
   - attr_list
+  - markdown.extensions.extra
   - pymdownx.details
   - toc:
       permalink: '#'
