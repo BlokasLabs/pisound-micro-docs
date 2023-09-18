@@ -63,6 +63,7 @@ nav:
   - libpisoundmicro: libpisoundmicro.md
   - Sysfs GPIO: sysfs-gpio.md
   - gpiod & libpgiod: gpiod-libgpiod.md
+  - License: license.md
 
 plugins:
   - search

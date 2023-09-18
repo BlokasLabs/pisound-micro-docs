@@ -20,21 +20,25 @@ sudo apt install -y pollgpio
 
 #### Digital Output
 
-First let's get acquainted by going through some quick examples. Let's hook up an LED to Pisound Micro's pin B03, connect a single color LED's anode (+) through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet) to +3V3 (pin B01), and the cathode (-) to pin B03, then we can manually turn it on and off:
+First let's get acquainted by going through some quick examples. Let's hook up an LED to Pisound Micro's pin B03, connect a single color LED's anode (+) through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet) to GPIO pin B03, and the cathode (-) to pin B02 (GND).
+
+![GPIO LED](images/GPIO_LED.png)
+
+Then we can manually turn it on and off:
 
 ```bash
 # First create a GPIO output Element named 'my_led',
-# controlling pin B03 and initially setting it to high output.
-echo my_led gpio B03 output 1 > /sys/pisound-micro/setup
+# controlling pin B03 and initially setting it to low output.
+echo my_led gpio B03 output 0 > /sys/pisound-micro/setup
 
-# As both of the LED's pins are at high voltage, no current is flowing
+# As both of the LED's pins are at ground voltage, no current is flowing
 # and the LED is off.
 
-# Now let's make it light up by setting the GPIO low:
-echo 0 > /sys/pisound-micro/elements/my_led/value
+# Now let's make it light up by setting the GPIO high:
+echo 1 > /sys/pisound-micro/elements/my_led/value
 
 # The LED should be lit up now. Let's turn it off again:
-echo 1 > /sys/pisound-micro/elements/my_led/value
+echo 0 > /sys/pisound-micro/elements/my_led/value
 
 # Let's release the 'my_led' Element now, so the B03 pin can be used
 # for other purposes.
@@ -47,7 +51,11 @@ After you're done, disconnect the LED and the resistor.
 
 #### Digital Input
 
-Similarly, you may read the and off state of any of the GPIO lines of Pisound Micro. Hook up a momentary or toggle/slide switch to pin B03 and the other side of the switch to GND (pin B02) or just connect one end of a jumper cable to pin B03 and be prepared to short the other end to GND to see different input states. Here's how to read Digital Input:
+Similarly, you may read the on and off state of any of the GPIO lines of Pisound Micro. Hook up a momentary or toggle/slide switch to pin B03 and the other side of the switch to GND (pin B02) or just connect one end of a jumper cable to pin B03 and be prepared to short the other end to GND to see different input states.
+
+![GPIO Switch](images/GPIO_Switch.png)
+
+Here's how to read Digital Input:
 
 ```bash
 # Let's create a GPIO input Element named 'switch',
@@ -77,7 +85,11 @@ echo switch > /sys/pisound-micro/unsetup
 
 #### Analog Input / Potentiometer
 
-By now a pattern should have emerged - to get analog readings between 0V (GND) and 3.3V, you have to set up an `analog_in` typed Element, using a pin with analog reading functionality. It provides 10 bit resolution - values between 0 and 1023. Additionally, for convenience, it's possible to limit the input range to certain values if you're not interested in the entire range using `input_min` and `input_max` sysfs attributes, as well as remap the output value range to values that fit your application, including reversing the polarity, using `value_low` and `value_high` sysfs attributes. Here's a quick example project - take any 3 pin single channel potentiometer you have, connect its 1st pin to GND, the 2nd to pin B23 and the 3rd to +3V3. A classic voltage divider circuit. Then:
+By now a pattern should have emerged - to get analog readings between 0V (GND) and 3.3V (AVDD), you have to set up an `analog_in` typed Element, using a pin with analog reading functionality. It provides 10 bit resolution - values between 0 and 1023. Additionally, for convenience, it's possible to limit the input range to certain values if you're not interested in the entire range using `input_min` and `input_max` sysfs attributes, as well as remap the output value range to values that fit your application, including reversing the polarity, using `value_low` and `value_high` sysfs attributes. Here's a quick example project - take any 3 pin single channel potentiometer you have, connect its 1st pin to GND, the 2nd to pin B23 and the 3rd to AVDD.
+
+![GPIO Potentiometer](images/GPIO_Potentiometer.png)
+
+A classic voltage divider circuit. Then:
 
 ```bash
 # Let's create an analog_in Element named 'pot' on pin B23:
@@ -121,6 +133,8 @@ echo pot > /sys/pisound-micro/unsetup
 #### Encoder
 
 Quadrature encoders are handled similarly to analog inputs described above, they do have one more attribute though - `value_mode`, which configures what happens when the highest or lowest value is reached - should it stay there, or wrap to the other end. The encoders are best placed on pins between B03 and B18. Let's give it a spin - hook up a quadrature encoder's 1st pin to B03, the 2nd pin to GND and the 3rd pin to B04, then:
+
+![GPIO Encoder](images/GPIO_Encoder.png)
 
 ```bash
 # Let's setup 'enc' Element on pins B03 and B04 with internal pull-ups
@@ -187,7 +201,11 @@ echo enc > /sys/pisound-micro/unsetup
 
 #### MIDI Activity LED
 
-This is a simple automatic output Element, indicating activity on either MIDI input or output. First, connect two single color LEDs, one using signal line B03, the other B04, in the following way - the LED's anode (+) should be connected through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet) to +3V3 (pin B01), and the cathode (-) pin should be connected to one of aforementioned GPIO lines. Then set them up:
+This is a simple automatic output Element, indicating activity on either MIDI input or output events. First, connect two single color LEDs, one using signal line B03, the other B04, in the following way - the LED's cathode (-) should be connected to GND (pin B02), and the anode (+) pins should be connected to one of aforementioned GPIO lines, each through a series resistor (usually with values between 200 Ohm and 1k Ohm, depending on your specific LED, like color, refer to its datasheet).
+
+![GPIO Activity LED](images/GPIO_Activity_LED.png)
+
+Then set them up:
 
 ```bash
 echo act_in activity_midi_in B03 > /sys/pisound-micro/setup

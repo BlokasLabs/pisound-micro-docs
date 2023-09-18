@@ -28,6 +28,8 @@ todo: įdėt gal gifą kaip visual studio code pagalba atrodo betypinant
 
 Let's dive right in and look at a minimal, but complete, working configuration example:
 
+![GPIO Encoder](images/GPIO_Encoder.png)
+
 ```json
 {
     "$schema": "https://blokas.io/json/pisound-micro-schema.json",
@@ -86,6 +88,8 @@ To gain a good understanding of the possibilities for Pisound Micro controls, fi
 Each Pisound Micro control is defined as an object within the container `"pisound-micro": {}` object. The keys are the Pisound Micro Element names to use. These names will have to be used in the `mappings` section later on. The `type` property is essential, the remaining set of properties that can be set depend on it.
 
 Here's a quick example on how an Analog Input should be configured:
+
+![GPIO Potentiometer](images/GPIO_Potentiometer.png)
 
 ```json
 ...
