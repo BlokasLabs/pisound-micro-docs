@@ -20,9 +20,11 @@ Upon modifying the configuration, you must restart the server for changes to tak
 sudo systemctl restart pisound-micro-mapper.service
 ```
 
-Json is a text based format with strict syntax rules, here's a quick [tutorial](https://www.tutorialspoint.com/json/json_syntax.htm){target=_blank} to get you started. Only valid json files are accepted, but there's tools available to help getting them right. For example, there's an online [JSONLint](https://jsonlint.com/){target=_blank} tool which may verify the syntax of your file, or you can use a text editor with built-in validation, such as [Visual Studio Code](https://code.visualstudio.com/){target=_blank} or [Sublime Text](https://www.sublimetext.com/){target=_blank} for editing.
+Json is a text based format with strict syntax rules, here's a quick [tutorial](https://www.tutorialspoint.com/json/json_syntax.htm){target=_blank} to get you started. Only valid json files are accepted, but there's tools available to help get them right. For example, there's an online [JSONLint](https://jsonlint.com/){target=_blank} tool which may verify the syntax of your file, or you can use a text editor with built-in validation, such as [Visual Studio Code](https://code.visualstudio.com/){target=_blank} or [Sublime Text](https://www.sublimetext.com/){target=_blank} for editing.
 
-todo: įdėt gal gifą kaip visual studio code pagalba atrodo betypinant
+![VSCode](images/VSCode.gif)
+
+They can even offer auto-completion of values.
 
 ## A Basic Example
 
