@@ -58,6 +58,7 @@ copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
 nav:
   - Pisound Micro: index.md
   - Getting Started: getting-started.md
+  - Detailed Specs: detailed-specs.md
   - Pisound Micro Mapper: pisound-micro-mapper.md
   - Sysfs Interface: sysfs-interface.md
   - libpisoundmicro: libpisoundmicro.md
