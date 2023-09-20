@@ -14,7 +14,7 @@ Simply run `sudo apt install libpisoundmicro-dev` and you will get the library a
 
 ### Python
 
-Python 3 bindings library can be set up by running `sudo apt install pypisoundmicro`
+Python 3 bindings library can be set up by running `sudo apt install pypisoundmicro`.
 
 ## Key Concepts
 
@@ -22,7 +22,7 @@ Python 3 bindings library can be set up by running `sudo apt install pypisoundmi
 
 Pisound Micro exposes its I/O functionality through so called Elements - they have a name, are of a specific type (like an Analog Input or a Gpio Input), and have a specific set of attributes, depending on their type.
 
-The Elements that are set up via libpisoundmicro are reference counted. Object oriented languages implicitly take care of releasing the references whenever necessary, tied to the lifetime of the objects. If using C. you have to keep track of it yourself.
+The Elements that are set up via libpisoundmicro are reference counted. Object oriented languages implicitly take care of releasing the references whenever necessary, tied to the lifetime of the objects. If using C, you have to keep track of it yourself.
 
 ### Element Setup
 
@@ -74,7 +74,7 @@ There's specific per-type APIs for setting up brand new Elements, like `upisnd_s
 
 There's also a generic `upisnd_setup` API, taking a generic setup config container `upisnd_setup_t`.
 
-Some Elements provide type specific API's, prefix with the type, for example `upisnd_element_gpio_...` or `upisnd_element_encoder_...`. See the API Reference documentation for all of them.
+Some Elements provide type specific API's, prefixed with the type, for example `upisnd_element_gpio_...` or `upisnd_element_encoder_...`. See the API Reference documentation for all of them.
 
 ### Element Name
 
