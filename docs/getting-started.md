@@ -14,7 +14,7 @@ After making the connections and before powering on, always doublecheck with a m
 
 #### Mounting on Top
 
-For mounting Pisound Micro directly on top of the Raspberry Pi, you'll want to use a 2x20 female pin header with 2.54mm (0.1") pitch. You may find 40 pin headers with pins of different lengths (todo: link į toby / digikey?), ones with long pins are useful for stacking something on top or making additional connections using female cable jumpers or soldering directly to the protruding pins. You may use headers with short pin length too, as the entire 40 pin GPIO header is duplicated alongside for easy access to the Raspberry Pi GPIOs.
+For mounting Pisound Micro directly on top of the Raspberry Pi, you'll want to use a 2x20 female pin header with 2.54mm (0.1") pitch. You may find 40 pin headers with pins of different lengths ([Toby](https://www.toby.co.uk/board-to-board-pcb-connectors/254mm-sockets/ref-raspberry-pi-rpi-hat-specification-connector-extended-tail-sockets/){target=_blank}, [Male Headers on DigiKey](https://www.digikey.com/short/w8rrh83w){target=_blank}, [Female Headers on DigiKey](https://www.digikey.com/short/q5jcpcqw){target=_blank}), ones with long pins are useful for stacking something on top or making additional connections using female cable jumpers or soldering directly to the protruding pins. You may use headers with short pin length too, as the entire 40 pin GPIO header is duplicated alongside for easy access to the Raspberry Pi GPIOs.
 
 ![Pisound Micro on Raspberry Pi](images/Direct_RPi.png)
 
