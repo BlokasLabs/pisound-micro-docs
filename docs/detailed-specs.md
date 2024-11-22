@@ -59,24 +59,24 @@ This header hosts mostly analog audio and MIDI pins, also 6 GPIO pins.
 
     |                        |                         |
     | ---------------------- | ----------------------- |
-    | 1. AGND                | 2. AGND                 |
+    | 1. MONOOUT/VGND        | 2. AGND                 |
     | 3. HP_OUT_L            | 4. HP_OUT_R             |
     | 5. AGND                | 6. AGND                 |
-    | 7. LINE_OUT_L-         | 8. LINE_OUT_R-          |
-    | 9. LINE_OUT_L+         | 10. LINE_OUT_R+         |
+    | 7. LINE_OUT_L-         | 8. LINE_OUT_L+          |
+    | 9. LINE_OUT_R-         | 10. LINE_OUT_R+         |
     | 11. AGND               | 12. AGND                |
-    | 13. LINE_IN_L-         | 14. LINE_IN_R-          |
-    | 15. LINE_IN_L+         | 16. LINE_IN_R+          |
+    | 13. LINE_IN_R-         | 14. LINE_IN_R+          |
+    | 15. LINE_IN_L-         | 16. LINE_IN_L+          |
     | 17. AUX_IN_L           | 18. AUX_IN_R            |
-    | 19. GND                | 20. GND                 |
-    | 21. MIDI In Sink (5)   | 22. MIDI Out Source (5) |
-    | 23. MIDI In Source (4) | 24. MIDI Out Sink (4)   |
+    | 19. AGND               | 20. AGND                |
+    | 21. MIDI In Sink (5)   | 22. MIDI In Source (4)  |
+    | 23. MIDI Out Sink (5)  | 24. MIDI Out Source (4) |
     | 25. GND                | 26. GND                 |
     | 27. A27 (GPIO)         | 28. A28 (GPIO)          |
     | 29. A29 (GPIO)         | 30. A30 (GPIO)          |
     | 31. A31 (GPIO)         | 32. A32 (GPIO)          |
 
-The number in brackets of MIDI pins indicate which DIN-5 pin should be connected. For MIDI output, make sure to connect DIN-5 pin 2 to the output. For minijack MIDI ports, refer to [https://minimidi.world/](https://minimidi.world/){target=_blank}. (Our products use TRS Type A)
+The number in brackets of MIDI pins indicate which DIN-5 pin should be connected. For MIDI output, make sure to connect DIN-5 pin 2 to GND. For minijack MIDI ports, refer to [https://minimidi.world/](https://minimidi.world/){target=_blank}. (Our products use TRS Type A)
 
 ### 40-Pin Header B
 
@@ -89,25 +89,25 @@ This header hosts 31 GPIO pins, with 2 specialized sets, one for encoders (16 pi
     |                   |                   |
     | ----------------- | ----------------- |
     | 1. +3.3V Power    | 2. GND            |
-    | 3. A03 (Encoder)  | 4. A04 (Encoder)  |
-    | 5. A05 (Encoder)  | 6. A06 (Encoder)  |
-    | 7. A07 (Encoder)  | 8. A08 (Encoder)  |
-    | 9. A09 (Encoder)  | 10. A10 (Encoder) |
-    | 11. A11 (Encoder) | 12. A12 (Encoder) |
-    | 13. A13 (Encoder) | 14. A14 (Encoder) |
-    | 15. A15 (Encoder) | 16. A16 (Encoder) |
-    | 17. A18 (Encoder) | 18. A18 (Encoder) |
+    | 3. B03 (Encoder)  | 4. B04 (Encoder)  |
+    | 5. B05 (Encoder)  | 6. B06 (Encoder)  |
+    | 7. B07 (Encoder)  | 8. B08 (Encoder)  |
+    | 9. B09 (Encoder)  | 10. B10 (Encoder) |
+    | 11. B11 (Encoder) | 12. B12 (Encoder) |
+    | 13. B13 (Encoder) | 14. B14 (Encoder) |
+    | 15. B15 (Encoder) | 16. B16 (Encoder) |
+    | 17. B17 (Encoder) | 18. B18 (Encoder) |
     | 19. +3.3V Power   | 20. GND           |
     | 21. AVDD          | 22. GND           |
-    | 23. A23 (ADC)     | 24. A24 (ADC)     |
-    | 25. A25 (ADC)     | 26. A26 (ADC)     |
-    | 27. A27 (ADC)     | 28. A28 (ADC)     |
-    | 29. A29 (ADC)     | 30. A30 (ADC)     |
-    | 31. A31 (ADC)     | 32. A32 (ADC)     |
-    | 33. A33 (ADC)     | 34. A34 (ADC)     |
+    | 23. B23 (ADC)     | 24. B24 (ADC)     |
+    | 25. B25 (ADC)     | 26. B26 (ADC)     |
+    | 27. B27 (ADC)     | 28. B28 (ADC)     |
+    | 29. B29 (ADC)     | 30. B30 (ADC)     |
+    | 31. B31 (ADC)     | 32. B32 (ADC)     |
+    | 33. B33 (ADC)     | 34. B34 (ADC)     |
     | 35. AVDD          | 36. GND           |
-    | 37. A37 (GPIO)    | 38. A38 (GPIO)    |
-    | 39. A39 (GPIO)    | 40. GND           |
+    | 37. B37 (GPIO)    | 38. B38 (GPIO)    |
+    | 39. B39 (GPIO)    | 40. GND           |
 
 Pins in Encoder and ADC groups can be used as digital I/O as well. Encoder pins are best suited for use with Encoders, as they have a dedicated hardware interrupt upon signal level changes on the Pisound Micro's microcontroller. That makes them suitable for detection of digital signal edges when used as GPIOs too. Encoders may be connected to the rest of the GPIO pins as well, but they may not be as snappy.
 
@@ -115,4 +115,4 @@ AVDD is the filtered analog 3.3V power supply, prefer to use it as the positive 
 
 ## Supported Raspberry Pi Models
 
-
+todo

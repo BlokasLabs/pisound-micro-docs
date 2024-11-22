@@ -2,7 +2,6 @@ docs_dir: 'docs'
 site_dir: 'static'
 site_name: Pisound Micro Documentation
 site_author: UAB VILNIAUS BLOKAS
-google_analytics: ['UA-44135535-1', 'auto']
 use_directory_urls: true
 theme:
   name: 'material'
@@ -12,6 +11,10 @@ theme:
     primary: 'white'
     accent: 'white'
   custom_dir: 'blokas-docs-theme'
+  features:
+    - navigation.expand
+    #- navigation.instant
+    - navigation.footer
 site_url: https://blokas.io/pisound-micro/docs/
 extra:
   ads:
@@ -19,22 +22,22 @@ extra:
     patchboxos: false
     midihub: false
     modep: false
-  discourse: 'https://community.blokas.io/'
+  #discourse: 'https://community.blokas.io/'
   disqus: 'fake'
   social:
-    - type: 'github'
-      link: 'https://github.com/BlokasLabs'
-    - type: 'twitter'
-      link: 'https://twitter.com/blokaslabs'
-    - type: 'facebook'
-      link: 'https://www.facebook.com/blokaslabs/'
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/BlokasLabs"
+    - icon: "fontawesome/brands/x-twitter"
+      link: "https://twitter.com/blokaslabs"
+    - icon: "fontawesome/brands/facebook"
+      link: "https://www.facebook.com/blokaslabs/"
 repo_name: 'pisound-micro-docs'
 repo_url: 'https://github.com/BlokasLabs/pisound-micro-docs/'
 markdown_extensions:
   - admonition
   - attr_list
-  - markdown.extensions.extra
   - pymdownx.details
+  - markdown.extensions.md_in_html
   - toc:
       permalink: '#'
   - pymdownx.arithmatex
@@ -42,7 +45,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.critic
   - pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
@@ -53,7 +57,7 @@ markdown_extensions:
   - footnotes:
       PLACE_MARKER: '///Footnotes Go Here///'
 
-copyright: '&copy; 2023 VILNIAUS BLOKAS UAB'
+copyright: '&copy; 2024 VILNIAUS BLOKAS UAB'
 
 nav:
   - Pisound Micro: index.md

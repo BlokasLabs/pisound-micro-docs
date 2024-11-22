@@ -6,11 +6,11 @@ The Pisound Micro comes with no header or audio / MIDI connectors pre-soldered, 
 
 ### Hooking up to Raspberry Pi
 
-In order to use Pisound Micro with Raspberry Pi, either all (or a minimal actually used set) of the Raspberry Pi GPIO header pins must make contact between the boards. The pins map one-to-one, meaning that each `rpi>` GPIO pin on Pisound Micro must be connected to the corresponding GPIO pin on the Raspberry Pi. For example, pin 1 on Pisound Micro should be connected to pin 1 on the Raspberry Pi, pin 2 to pin 2, and so on, up to pin 40.
+In order to use Pisound Micro with Raspberry Pi, either all (or a minimal actually used set) of the Raspberry Pi GPIO header pins must make contact between the boards. The pins map one-to-one, meaning that each `p01>` GPIO pin on Pisound Micro must be connected to the corresponding GPIO pin on the Raspberry Pi. For example, pin 1 on Pisound Micro should be connected to pin 1 on the Raspberry Pi, pin 2 to pin 2, and so on, up to pin 40.
 
 The square hole indicates the very first pin. The pin numbering matches the numbering at [pinout.xyz](https://pinout.xyz){target=_blank}
 
-After making the connections and before powering on, always doublecheck with a multimeter in beep mode whether there's no unexpected connections.
+After making the connections and before powering on, always doublecheck with a multimeter in beeping mode whether there's no unexpected connections.
 
 #### Mounting on Top
 
@@ -18,7 +18,7 @@ For mounting Pisound Micro directly on top of the Raspberry Pi, you'll want to u
 
 ![Pisound Micro on Raspberry Pi](images/Direct_RPi.png)
 
-The recommended way of soldering the female pin header is to insert it from the bottom side of Pisound Micro (the bottom side is the one without any electronic components) to the holes marked with `rpi>`, first solder a corner pin, then inspect the header alignment. If any adjustment is needed, reheat the solder, move the header into the correct position, and hold it there until the solder cools down and stiffens back again. Then solder a diagonal corner pin, so the header is secured in a stable position. Continue soldering every pin. If you think you're spending too much time on a single pin, you may want to skip a few pins forward for soldering and come back to the previous location, to avoid overheating the area.
+The recommended way of soldering the female pin header is to insert it from the bottom side of Pisound Micro (the bottom side is the one without any electronic components) to the holes marked with `p01>`, first solder a corner pin, then inspect the header alignment. If any adjustment is needed, reheat the solder, move the header into the correct position, and hold it there until the solder cools down and stiffens back again. Then solder a diagonal corner pin, so the header is secured in a stable position. Continue soldering every pin. If you think you're spending too much time on a single pin, you may want to skip a few pins forward for soldering and come back to the previous location, to avoid overheating the area.
 
 #### Ribbon Cable Connection
 
@@ -81,21 +81,21 @@ The bellow schematic shows how to hook up audio jacks to Pisound Micro's A heade
 
 <div class="desktop-display" markdown="1">
 
-| <span style="color: black;">Black</span> | <span style="color: grey;">White</span> | <span style="color: Red;">Red</span> | <span style="color: blue;">Blue</span> | <span style="color: orange;">Orange</span> | <span style="color: green;">Green</span> | <span style="color: purple;">Purple</span> |
-| ----- | ----- | --- | ---- | ------ | ----- | ------ |
-| AGND | Left Ch. | Right Ch. | Diff. Left- | Diff. Left+ | Diff. Right- | Diff. Right+ |
-| **Output pins:** | A03 | A04 | A07 | A09 | A08 | A10 |
-| **Input pins:** | A17 | A18 | A11 | A13 | A12 | A14 |
+| <span style="color: black;">Black</span> {width=119px}| <span style="color: darkgray;">Gray</span> | <span style="color: lightgray;">White</span> | <span style="color: Red;">Red</span> | <span style="color: blue;">Blue</span> | <span style="color: orange;">Orange</span> | <span style="color: green;">Green</span> | <span style="color: purple;">Purple</span> |
+| ----- | ---- | ----- | --- | ---- | ------ | ----- | ------ |
+| AGND | VGND | Left Ch. | Right Ch. | Diff. Left- | Diff. Left+ | Diff. Right- | Diff. Right+ |
+| **Output pins:** | A01 | A03 | A04 | A07 | A08 | A09 | A10 |
+| **Input pins:** | N/A | A17 | A18 | A15 | A16 | A13 | A14 |
 
 </div>
 
 <div class="mobile-display" markdown="1">
 
-| <span style="color: black;">Black</span> | <span style="color: grey;">White</span> | <span style="color: Red;">Red</span> | <span style="color: blue;">Blue</span> |
+| <span style="color: black;">Black</span> | <span style="color: darkgray;">Gray</span> | <span style="color: lightgray;">White</span> | <span style="color: Red;">Red</span> |
 | ----- | ----- | --- | ---- |
-| AGND | Left Ch., Out: A03, In: A17 | Right Ch., Out: A04, In: A18 | Diff. Left-, Out: A07, In: A11 |
-| <span style="color: orange; font-weight: bold;">Orange</span> | <span style="color: green; font-weight: bold;">Green</span> | <span style="color: purple; font-weight: bold;">Purple</span> | &nbsp; |
-| Diff. Left+, Out: A09, In: A13 | Diff. Right-, Out: A08, In: A13 | Diff. Right+, Out: A10, In: A14 | &nbsp; |
+| AGND  | VGND |  Left Ch., Out: A03, In: A17 | Right Ch., Out: A04, In: A18 | Diff. Left-, Out: A07, In: A15 |
+| <span style="color: blue; font-weight: bold;">Blue</span> | <span style="color: orange; font-weight: bold;">Orange</span> | <span style="color: green; font-weight: bold;">Green</span> | <span style="color: purple; font-weight: bold;">Purple</span> |
+| Diff. Left-, Out: A07, In: A15 | Diff. Left+, Out: A08, In: A16 | Diff. Right-, Out: A09, In: A13 | Diff. Right+, Out: A10, In: A14 |
 
 </div>
 
@@ -106,8 +106,8 @@ You may opt to use DIN-5 MIDI ports, or minijack ports, up to your preference. I
 | Pin Name    | Input Port      | Output Port |
 | ----------- | --------------- | ----------- |
 | 2 Shield    | (not connected) | GND         |
-| 4 Source    | A23             | A22         |
-| 5 Sink      | A21             | A24         |
+| 4 Source    | <span style="color: orange">A22</span> | <span style="color: orange">A24</span> |
+| 5 Sink      | <span style="color: blue">A21</span> | <span style="color: blue">A23</span> |
 
 ![MIDI Connections](images/MIDI_Connections.png)
 
@@ -124,13 +124,13 @@ The LEDs on pins A27 (input activity) and A28 (output activity) are optional and
 
 Pay attention that the output has a GND connection on its Pin 2 (the middle pin), while Input's Pin 2 is not connected.
 
-If using minijacks, there's 3 ways on how to hook them up, pick one that's suited for the devices you intend to use it with. Our products are using Type A (MIDI Standard). Please refer to this excellent website guide for wiring diagrams: [https://minimidi.world/](https://minimidi.world/){target=_blank}
+If using minijacks, there's 3 ways on how to hook them up, pick one that's suited for the devices you intend to use it with. Our products are using Type A (MIDI Standard). Please refer to this excellent website for wiring diagrams: [https://minimidi.world/](https://minimidi.world/){target=_blank}
 
 ## Initial Software Setup
 
 ### APT Server Setup
 
-If you're using an OS image other then Patchbox OS, then do this first:
+If you're using an OS image other than Patchbox OS, then do this first:
 
 ```sh
 curl https://blokas.io/apt-setup.sh | sh
@@ -150,10 +150,10 @@ sudo apt install pisound-micro
 ### Setting up the Boot Config
 
 To make the Pisound Micro's kernel driver load automatically on system startup, the
-[`/boot/config.txt`](https://www.raspberrypi.com/documentation/computers/config_txt.html){target=_blank} should be modified:
+[`/boot/firmware/config.txt`](https://www.raspberrypi.com/documentation/computers/config_txt.html){target=_blank} should be modified:
 
 ```sh
-sudo nano /boot/config.txt
+sudo nano /boot/firmware/config.txt
 ```
 
 Add the following at the end of the file:
@@ -213,7 +213,7 @@ If you don't see the Pisound Micro listed by any of the above utilities, feel fr
 
 ### Device Id
 
-In audio software, you can use an identifier such as `hw:3,0` (3rd card, 0 port), as shown in above section's example output, when configuring audio devices in your audio software. However, as this may differ based on your system configuration or even whether there's some additional USB devices connected, a better way is to use `hw:pisoundmicro` identifier which should be consistent. For specifying the MIDI ports for MIDI software, you may use `pisoundmicro:0`.
+In audio software, you can use an identifier such as `hw:3,0` (3rd card, 0 port), as shown in above section's example output, when configuring audio devices in your audio software. However, as this may differ based on your system configuration or even whether there's some additional USB devices connected, a better value to use  is the `hw:pisoundmicro` identifier which should consistently identify the Pisound Micro. For specifying the MIDI ports for MIDI software, you may use `pisoundmicro:0`.
 
 ### ALSA and Mixer Controls
 

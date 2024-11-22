@@ -233,7 +233,7 @@ echo act_out > /sys/pisound-micro/unsetup
 
 There's a couple of types in use in the sysfs interface, the further sections will refer to this table:
 
-| Type Name {width="15%"}| Values {width="15%}| Description |
+| Type Name {width="15%"}| Values {width="15%"}| Description |
 | --------- | ---------- | ------ |
 | `name`    | Text characters | The maximum length in bytes is 63, the '`/`' character is not allowed. |
 | `pin`     | `A27` - `A32`, `B03` - `B18`, `B23` - `B34`, `B37` - `B39` | The GPIO pin on one of Pisound Micro's extension headers, consisting of 3 symbols - A or B letter, indicating which Pisound Micro header it refers to, and 2 digit decimal number, indicating the pin position on the header. |

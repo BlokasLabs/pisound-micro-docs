@@ -49,13 +49,13 @@ To make integration to new or existing programs quick and easy, there's `libpiso
 
 ### Sysfs /sys/class/gpio
 
-Even though this method is deprecated in favor of /dev/gpiochip* character devices and gpiod / libgpiod since Linux kernel 4.8, anyone who's worked with GPIOs and Linux has come across it. It provides a simple file system tree configurable by file utilities like `echo` and `cat`, as well as file system APIs to manipulate the state of the GPIO pins.
+Even though this method is deprecated in favor of /dev/gpiochipN character devices and gpiod / libgpiod since Linux kernel 4.8, anyone who's worked with GPIOs and Linux has come across it. It provides a simple file system tree configurable by file utilities like `echo` and `cat`, as well as file system APIs to manipulate the state of the GPIO pins.
 
 This method only allows using the Pisound Micro pins as digital I/O.
 
 See [Sysfs GPIO](sysfs-gpio.md) for more details on `/sys/class/gpio` usage.
 
-### /dev/gpiochip* / gpiod / libgpiod
+### /dev/gpiochipN / gpiod / libgpiod
 
 The spiritual successor of `/sys/class/gpio` - exposing the digital I/O functionality through a character device and providing a more flexible way of configuring GPIOs through `ioctl` system calls. Fortunately, there's `gpiod` package as well as `libgpiod` that abstract all the tricky details into a set of utility programs and easy to use C/C++ APIs with bindings to other languages.
 
