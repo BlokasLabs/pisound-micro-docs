@@ -1,12 +1,130 @@
 # Detailed Specifications
 
+## General
+
+Pisound Micro follows the Raspberry Pi's Hardware Attached on Top (HAT) form factor.
+
+| Parameter               | Value                              |
+| ----------------------- | ---------------------------------- |
+| MIDI I/O                | 1 Input, 1 Output                  |
+| MIDI Activity           | Can be indicated on any GPIO       |
+| MIDI Loopback Latency   | 1.4ms                              |
+| Minimum I²C Baud Rate   | 100kHz                             |
+| Maximum I²C Baud Rate   | 400kHz                             |
+| Number of GPIOs         | 37                                 |
+| EXTINT Pins             | 16                                 |
+| ADC Pins                | 12                                 |
+| ADC Resolution          | 10 bits, value range 0 - 1023      |
+| GPIO Loopback Latency   | 0.5ms                              |
+| GPIO Microcontroller    | Microchip [ATSAMD21J18](https://www.microchip.com/en-us/product/atsamd21j18){target=_blank} |
+| Current Draw            | 25 ~ 35 mA @ 5.1V DC               |
+| Dimensions              | 56mm x 65mm x 4mm                  |
+| Weight                  | 13g                                |
+
+
+## Mechanical Drawing
+
+The mechanical drawing provides a detailed overview of the Pisound Micro's physical dimensions and layout, enabling the creation of custom daughter or motherboards for use with Pisound Micro or supporting the general physical layout of a product incorporating a Pisound Micro.
+
+All dimensions in the drawing are specified in millimeters. R1 and R3 refer to corner rounding using 1mm and 3mm radius respectively.
+
+![Mechanical Drawing](images/Pisound_Micro_Mechanical_Drawing.png)
+
+Also available as a [PDF](images/Pisound_Micro_Mechanical_Drawing.pdf){target=_blank}.
+
+## Supported Raspberry Pi Models
+
+| **Compatible Models** |  |
+| ----- | ----- |
+| Raspberry Pi 5 | Raspberry Pi 4B |
+| Raspberry Pi 3B | Raspberry Pi 3B+ |
+| Other Models[^1] | |
+
+[^1]:
+    Not recommended for new audio based projects due to lesser processing power, but Pisound Micro can also be used with Raspberry Pi's 2, Zero, Zero W and Zero 2 W as well as the A models.
+
+///Footnotes Go Here///
+
+
 ## Audio
+
+| Parameter               | Value                              |
+| ----------------------- | ---------------------------------- |
+| Audio Channels          | 2                                  |
+| Audio CODEC             | Analog Devices [ADAU1961](https://www.analog.com/media/en/technical-documentation/data-sheets/adau1961.pdf){target=_blank} |
+| Audio Input Pins        | 6 input pins - 2 in single ended mode, remaining configurable as 4 pins in single ended mode or 2 differential pairs |
+| Audio Output Pins       | 2 single ended pins and 2 differential pairs (can be used in single ended mode), 1 mono output pin |
+| Audio Output Impedance  | Line out (10kΩ) or Headphone (16Ω - 32Ω)          |
+| Line Out Capacitance    | 100µF                                             |
+| Line Input Gain         | Up to 35.25dB gain, additional +20dB boost option |
+| AUX Input Gain          | Up to 6dB                                         |
+| SNR                     | > 98dB                                            |
+| THD                     | < 0.02%                                           |
+| THD+N                   | < -90dB                                           |
+| Sampling Rates          | From 8kHz to 96kHz                                |
+
+### Frequency Response
+
+=== "Headphone"
+
+    ![](images/audio/freq_hp.png)
+
+=== "Capless Headphone"
+
+    ![](images/audio/freq_capless_hp.png)
+
+=== "Line"
+
+    ![](images/audio/freq_line.png)
+
+### THD
+
+=== "Headphone"
+
+    ![](images/audio/thd_hp.png)
+
+=== "Capless Headphone"
+
+    ![](images/audio/thd_capless_hp.png)
+
+=== "Line"
+
+    ![](images/audio/thd_line.png)
 
 ## MIDI
 
 There's 2 pins for MIDI output and 2 pins for MIDI input, with MIDI standard compliant opto-isolated circuit behind them. The only thing that remains to be connected is MIDI ports of your choice, see [Header A](#32-pin-header-a) for details.
 
-Latency: todo
+On average, the roundtrip latency, which is the measure of a 3 byte Note On message going from software through ALSA sequencer, the driver, firmware to physical data output and back all the way to the receiving port, the firmware, the driver, the ALSA sequencer and the software program is around 1.45ms. More detailed test results by alsa-midi-latency-test program:
+
+??? "MIDI Latency Test Results"
+
+    ```
+    patch@patchbox:~ $ alsa-midi-latency-test -i pisoundmicro:0 -o pisoundmicro:0 -1
+    > alsa-midi-latency-test 0.0.5
+    > running on Linux release 6.12.19-v8-16k+ (version #1865 SMP PREEMPT Wed Mar 19 13:48:20 GMT 2025) on aarch64
+    > clock resolution: 0.000000001 s
+    
+    > sampling 10000 midi latency values - please wait ...
+    > press Ctrl+C to abort test
+    
+    sample; latency_ms; latency_ms_worst
+         0;      1.511;      1.511
+      3586;      1.530;      1.530
+      9999;      1.440;      1.530
+    > done.
+    
+    > latency distribution:
+    ...
+      1.4 -  1.5 ms:     9732 ##################################################
+      1.5 -  1.6 ms:      268 #
+    
+    > SUCCESS
+    
+     best latency was 1.4 ms
+     mean latency was 1.4 ms
+     worst latency was 1.5 ms, which is great.
+    ```
 
 ## GPIO
 
@@ -82,7 +200,7 @@ The number in brackets of MIDI pins indicate which DIN-5 pin should be connected
 
 ![Header B](images/Header_B.png)
 
-This header hosts 31 GPIO pins, with 2 specialized sets, one for encoders (16 pins, up to 8 encoders can be connected) as well as 12 10-bit ADC pins for hooking up potentiometers. All of the GPIO pins may serve as simple digital input/output pins as well.
+This header provides 31 GPIO pins, including two specialized groups: one with 16 pins designed for connecting up to 8 encoders, and another with 12 10-bit ADC pins ideal for potentiometers. Additionally, all GPIO pins can function as general-purpose digital input/output pins.
 
 ??? "Header B Pinout:"
 
@@ -112,7 +230,3 @@ This header hosts 31 GPIO pins, with 2 specialized sets, one for encoders (16 pi
 Pins in Encoder and ADC groups can be used as digital I/O as well. Encoder pins are best suited for use with Encoders, as they have a dedicated hardware interrupt upon signal level changes on the Pisound Micro's microcontroller. That makes them suitable for detection of digital signal edges when used as GPIOs too. Encoders may be connected to the rest of the GPIO pins as well, but they may not be as snappy.
 
 AVDD is the filtered analog 3.3V power supply, prefer to use it as the positive terminal for your analog potentiometer voltage divider circuits.
-
-## Supported Raspberry Pi Models
-
-todo

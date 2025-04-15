@@ -6,7 +6,7 @@ The Pisound Micro comes with no header or audio / MIDI connectors pre-soldered, 
 
 ### Hooking up to Raspberry Pi
 
-In order to use Pisound Micro with Raspberry Pi, either all (or a minimal actually used set) of the Raspberry Pi GPIO header pins must make contact between the boards. The pins map one-to-one, meaning that each `p01>` GPIO pin on Pisound Micro must be connected to the corresponding GPIO pin on the Raspberry Pi. For example, pin 1 on Pisound Micro should be connected to pin 1 on the Raspberry Pi, pin 2 to pin 2, and so on, up to pin 40.
+In order to use Pisound Micro with Raspberry Pi, either all or a minimal actually used set of the Raspberry Pi GPIO header pins must make contact between the boards. The pins map one-to-one, meaning that each `P01>` GPIO pin on Pisound Micro must be connected to the corresponding GPIO pin on the Raspberry Pi. For example, pin 1 on Pisound Micro should be connected to pin 1 on the Raspberry Pi, pin 2 to pin 2, and so on, up to pin 40.
 
 The square hole indicates the very first pin. The pin numbering matches the numbering at [pinout.xyz](https://pinout.xyz){target=_blank}
 
@@ -18,7 +18,7 @@ For mounting Pisound Micro directly on top of the Raspberry Pi, you'll want to u
 
 ![Pisound Micro on Raspberry Pi](images/Direct_RPi.png)
 
-The recommended way of soldering the female pin header is to insert it from the bottom side of Pisound Micro (the bottom side is the one without any electronic components) to the holes marked with `p01>`, first solder a corner pin, then inspect the header alignment. If any adjustment is needed, reheat the solder, move the header into the correct position, and hold it there until the solder cools down and stiffens back again. Then solder a diagonal corner pin, so the header is secured in a stable position. Continue soldering every pin. If you think you're spending too much time on a single pin, you may want to skip a few pins forward for soldering and come back to the previous location, to avoid overheating the area.
+The recommended way of soldering the female pin header is to insert it from the bottom side of Pisound Micro (the bottom side is the one without any electronic components) to the holes marked with `P01>`, first solder a corner pin, then inspect the header alignment. If any adjustment is needed, reheat the solder, move the header into the correct position, and hold it there until the solder cools down and stiffens back again. Then solder a diagonal corner pin, so the header is secured in a stable position. Continue soldering every pin. If you think you're spending too much time on a single pin, you may want to skip a few pins forward for soldering and come back to the previous location, to avoid overheating the area.
 
 #### Ribbon Cable Connection
 
@@ -67,7 +67,11 @@ In case the signal name matches on multiple pins (3.3V Power, 5V Power, GND), yo
 
 #### Custom PCB
 
-To build a custom PCB that hosts a Pisound Micro, refer to this mechanical drawing (todo) showcasing the key elements, their positions and dimensions - the outline of the board, the mounting holes, and the headers.
+To build a custom PCB that hosts a Pisound Micro, refer to the mechanical drawing showcasing the key elements, their positions and dimensions - the outline of the board, the mounting holes, and the headers.
+
+![Mechanical Drawing](images/Pisound_Micro_Mechanical_Drawing.png)
+
+Find more details about the drawing [here](detailed-specs.md#mechanical-drawing).
 
 ### Wiring Connectors
 

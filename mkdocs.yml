@@ -13,8 +13,9 @@ theme:
   custom_dir: 'blokas-docs-theme'
   features:
     - navigation.expand
-    #- navigation.instant
+    - navigation.instant
     - navigation.footer
+    - content.tabs.link
 site_url: https://blokas.io/pisound-micro/docs/
 extra:
   ads:
@@ -36,6 +37,9 @@ repo_url: 'https://github.com/BlokasLabs/pisound-micro-docs/'
 markdown_extensions:
   - admonition
   - attr_list
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.details
   - markdown.extensions.md_in_html
   - toc:
@@ -62,6 +66,7 @@ copyright: '&copy; 2024 VILNIAUS BLOKAS UAB'
 nav:
   - Pisound Micro: index.md
   - Getting Started: getting-started.md
+  - Audio Connections: audio-connections.md
   - Detailed Specs: detailed-specs.md
   - Pisound Micro Mapper: pisound-micro-mapper.md
   - Sysfs Interface: sysfs-interface.md
