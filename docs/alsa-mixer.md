@@ -4,7 +4,7 @@
 
 ALSA (Advanced Linux Sound Architecture) provides several tools for controlling audio settings on the Pisound Micro. This document explains how to use them for adjusting volume levels, inputs, outputs, and other sound card parameters.
 
-*Note*: The `pisound-micro-common` Debian package must be installed to use these tools. This package is automatically installed by the setup script in the [Getting Started](getting-started.md#initial-software-setup) section.
+*Note*: The `pisound-micro-common` Debian package must be installed to use these tools. If you followed [Initial Software Setup](getting-started.md#initial-software-setup), this package should already be installed.
 
 ## Using alsamixer
 
@@ -58,14 +58,6 @@ amixer -c pisoundmicro set 'PGA Boost' on
 
 # Set digital volume
 amixer -c pisoundmicro set Digital 90%
-
-# Enable high-pass filter on input
-amixer -c pisoundmicro set 'ADC High Pass Filter' on
-
-# Configure Automatic Level Control for recording
-amixer -c pisoundmicro set 'ALC Capture Function' on
-amixer -c pisoundmicro set 'ALC Capture Target' 2
-amixer -c pisoundmicro set 'ALC Capture Max Gain' 7
 
 # Switch between stereo and mono output modes
 amixer -c pisoundmicro set 'DAC Mono-Stereo-Mode' Stereo

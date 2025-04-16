@@ -221,24 +221,18 @@ In audio software, you can use an identifier such as `hw:3,0` (3rd card, 0 port)
 
 ### ALSA and Mixer Controls
 
-Pisound Micro has numerous mixer controls that control input and output volumes as well as certain features and signal routes of the on-board audio codec.
-
-To access the controls, you can use the ALSA mixer utility:
-
-```bash
-alsamixer
-```
-
 ![ALSA Mixer](images/alsamixer.gif)
 
-Make sure to select the Pisound Micro card in the *F6* key menu. *F3* key will show only the Playback controls, while *F4* will switch to Capture controls. See *F1* for more `alsamixer` usage details.
-
-A certain set of controls must be unmuted and volume set to non-minimal positions for audio to record or play. In case you get stuck, you may reinitialize the sound card to the default sensible control values by running:
+Pisound Micro has numerous mixer controls for managing input/output volumes and configuring the on-board audio codec. Here's a quick overview:
 
 ```bash
+# Open the graphical mixer interface (press F6 to select pisoundmicro)
+alsamixer
+
+# Reset to default settings if needed
 alsactl init pisoundmicro
 ```
 
 (The `pisound-micro` APT package must be installed as detailed in [above section](#software-and-default-configs))
 
-If you require command line access to the controls, there's [`amixer`](https://linux.die.net/man/1/amixer){target=_blank} command.
+For detailed instructions on using ALSA tools (`alsamixer`, `amixer`, and `alsactl`) with Pisound Micro, including essential commands and configuration examples, see [ALSA Mixer](alsa-mixer.md).
