@@ -12,7 +12,7 @@ Pisound Micro features multiple audio connection options that can be configured 
 
 | Pin | Default Function         | Alternate Function        |
 |-----|--------------------------|---------------------------|
-| A01 | VGND (Headphone Virtual Ground) | MONOOUT            |
+| A01 | VGND (Headphone Virtual Ground) | MONOOUT (Line Level) |
 | A03 | HPL (Headphone Left)     | -                         |
 | A04 | HPR (Headphone Right)    | -                         |
 | A07 | LINE_OUT_L- (Output)     | -                         |
@@ -71,13 +71,13 @@ Pisound Micro includes automatic protection that mutes the capless headphone out
 
 ### External Capacitor Configuration
 
-For connecting to external audio equipment, this configuration uses coupling capacitors with the HPL and HPR pins. This approach electrically isolates the Pisound Micro from other devices and allows the A01 pin to be repurposed as a MONOOUT.
+For connecting to external audio equipment, this configuration uses coupling capacitors with the HPL and HPR pins. This approach electrically isolates the Pisound Micro from other devices and allows the A01 pin to be repurposed as a line level MONOOUT.
 
 #### Wiring
 
 - **HPL (A03)**: Left channel (via coupling capacitor)
 - **HPR (A04)**: Right channel (via coupling capacitor)
-- **A01 (Optional)**: MONOOUT (can be left unconnected if unused)
+- **A01 (Optional)**: MONOOUT line level mono output (can be left unconnected if unused)
 
 #### Selecting Capacitors
 
@@ -186,9 +186,9 @@ All audio configurations can be controlled through Device Tree overlay parameter
 
 | Parameter     | Values                                           | Description                    |
 |---------------|--------------------------------------------------|--------------------------------|
-| `input-mode`  | "**differential**", "single-ended"               | Line input configuration       |
-| `hp-out-mode` | "**capless-headphone**", "headphone", "line-out" | Headphone output configuration |
-| `line-out`    | "**line-out**", "headphone"                      | Line output configuration      |
+| `input-mode`  | **differential**, single-ended                   | Line input configuration       |
+| `hp-out-mode` | **capless-headphone**, headphone, line-out       | Headphone output configuration |
+| `line-out`    | **line-out**, headphone                          | Line output configuration      |
 
 *Note*: Default values are marked in **bold**. The line output path includes 100μF capacitors on the board.
 
@@ -197,7 +197,7 @@ All audio configurations can be controlled through Device Tree overlay parameter
 Add or modify parameters in `/boot/firmware/config.txt`:
 
 ```
-dtoverlay=pisound-micro,hp-out-mode="headphone",input-mode="single-ended"
+dtoverlay=pisound-micro,hp-out-mode=headphone,input-mode=single-ended
 ```
 
 Parameters can be combined as needed or omitted to use defaults.
@@ -210,21 +210,14 @@ Parameters can be combined as needed or omitted to use defaults.
    ```
    Uses capless headphone output, differential inputs, and standard line outputs.
 
-2. **Isolated Headphone Output**:
+2. **Isolated Headphone Output and Multiple Input Sources**:
    ```
-   dtoverlay=pisound-micro,hp-out-mode="headphone"
+   dtoverlay=pisound-micro,hp-out-mode=headphone,input-mode=single-ended
    ```
-   Sets up headphone output with external capacitors for isolation.
-
-3. **Multiple Input Sources**:
+   Sets up headphone output with external capacitors for isolation and four single-ended inputs while keeping default line output settings.
+3. **Additional Line Output**:
    ```
-   dtoverlay=pisound-micro,input-mode="single-ended"
-   ```
-   Configures four single-ended inputs while keeping default output settings.
-
-4. **Additional Line Output**:
-   ```
-   dtoverlay=pisound-micro,hp-out-mode="line-out"
+   dtoverlay=pisound-micro,hp-out-mode=line-out
    ```
    Repurposes the headphone output as an additional line output.
 

@@ -1,5 +1,7 @@
 # Detailed Specifications
 
+Pisound Micro is a compact, high-quality audio interface designed specifically for Raspberry Pi computers. It provides professional-grade audio capabilities, MIDI connectivity, and extensive GPIO options in a single HAT-compatible board. With its low-latency performance and versatile I/O options, Pisound Micro enables developers, musicians, and makers to create sophisticated audio applications, from digital instruments and effects processors to interactive installations and embedded audio systems, all while maintaining pristine sound quality and reliable operation.
+
 ## General
 
 Pisound Micro follows the Raspberry Pi's Hardware Attached on Top (HAT) form factor.
@@ -20,7 +22,6 @@ Pisound Micro follows the Raspberry Pi's Hardware Attached on Top (HAT) form fac
 | Current Draw            | 25 ~ 35 mA @ 5.1V DC               |
 | Dimensions              | 56mm x 65mm x 4mm                  |
 | Weight                  | 13g                                |
-
 
 ## Mechanical Drawing
 
@@ -45,8 +46,9 @@ Also available as a [PDF](images/Pisound_Micro_Mechanical_Drawing.pdf){target=_b
 
 ///Footnotes Go Here///
 
-
 ## Audio
+
+Pisound Micro features high-quality audio capabilities designed for professional audio applications. Built around the Analog Devices ADAU1961 CODEC, it provides low-noise, low-distortion stereo audio with versatile input and output options. The board supports multiple audio configurations including headphone output, line-level connections, and differential pairs, making it adaptable for various audio scenarios from studio production to live performance. Its compact size and flexible connectivity make it particularly well-suited for interactive art installations, custom musical instrument design, and embedded audio projects where pristine sound quality and reliability are essential.
 
 | Parameter               | Value                              |
 | ----------------------- | ---------------------------------- |
@@ -65,31 +67,47 @@ Also available as a [PDF](images/Pisound_Micro_Mechanical_Drawing.pdf){target=_b
 
 ### Frequency Response
 
+The frequency response graphs below show how evenly Pisound Micro reproduces audio signals across the audible frequency spectrum (20Hz to 20kHz). A flat response indicates that the audio is reproduced without emphasizing or attenuating particular frequencies, ensuring accurate sound reproduction. The measurements were taken at 48kH and 96kHz sample rates with a 0dBFS signal. Different output configurations (Headphone, Capless Headphone, and Line) exhibit slightly different characteristics due to their respective output circuitry.
+
 === "Headphone"
 
     ![](images/audio/freq_hp.png)
+
+    Measured with 30Ω load and 470µF electrolytic capacitors.
 
 === "Capless Headphone"
 
     ![](images/audio/freq_capless_hp.png)
 
+    Measured with 30Ω load.
+
 === "Line"
 
     ![](images/audio/freq_line.png)
 
+    Measured with 10kΩ load,
+
 ### THD
+
+Total Harmonic Distortion (THD) measures the amount of harmonic distortion present in the audio signal, expressed as a percentage. Lower THD values indicate cleaner audio reproduction with fewer unwanted harmonics. The graphs below show THD measurements across the frequency spectrum for Pisound Micro's different output configurations. With THD values below 0.02%, Pisound Micro delivers high-fidelity audio that accurately preserves the original sound characteristics with minimal coloration or artifacts.
 
 === "Headphone"
 
     ![](images/audio/thd_hp.png)
 
+    Measured with 30Ω load and 470µF electrolytic capacitors.
+
 === "Capless Headphone"
 
     ![](images/audio/thd_capless_hp.png)
 
+    Measured with 30Ω load.
+
 === "Line"
 
     ![](images/audio/thd_line.png)
+
+    Measured with 10kΩ load.
 
 ## MIDI
 
@@ -216,14 +234,14 @@ This header provides 31 GPIO pins, including two specialized groups: one with 16
     | 15. B15 (Encoder) | 16. B16 (Encoder) |
     | 17. B17 (Encoder) | 18. B18 (Encoder) |
     | 19. +3.3V Power   | 20. GND           |
-    | 21. AVDD          | 22. GND           |
+    | 21. AVDD (+3.3V)  | 22. GND           |
     | 23. B23 (ADC)     | 24. B24 (ADC)     |
     | 25. B25 (ADC)     | 26. B26 (ADC)     |
     | 27. B27 (ADC)     | 28. B28 (ADC)     |
     | 29. B29 (ADC)     | 30. B30 (ADC)     |
     | 31. B31 (ADC)     | 32. B32 (ADC)     |
     | 33. B33 (ADC)     | 34. B34 (ADC)     |
-    | 35. AVDD          | 36. GND           |
+    | 35. AVDD (+3.3V)  | 36. GND           |
     | 37. B37 (GPIO)    | 38. B38 (GPIO)    |
     | 39. B39 (GPIO)    | 40. GND           |
 
