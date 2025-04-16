@@ -33,7 +33,7 @@ Pisound Micro supports three main types of audio connections, each with multiple
 - **Headphone Output**: 
     - Capless configuration (default) - Direct headphone connections
     - External capacitor configuration - For connecting to other audio equipment
-    - Line output configuration - Alternative line output option (external capacitor needed)
+    - HP Line output configuration - Alternative line output option (external capacitor needed)
 
 - **Line Input**:
     - Differential input - Balanced stereo channels with superior noise immunity
@@ -53,11 +53,15 @@ Pisound Micro offers three different configurations for the headphone output pin
 
 In the default configuration, the HPL (A03) and HPR (A04) pins provide stereo headphone output, while the VGND (A01) pin serves as a virtual ground. This eliminates the need for coupling capacitors and is ideal for most headphone applications.
 
+![Capless Headphone Output](images/Capless_HP.png)
+
 #### Wiring
 
 - **HPL (A03)**: Left channel
 - **HPR (A04)**: Right channel
 - **VGND (A01)**: Virtual ground
+
+Use `hp-out-mode=capless-headphone` dtoverlay parameter (or omit, as it is the default value).
 
 #### Important Note
 
@@ -73,11 +77,15 @@ Pisound Micro includes automatic protection that mutes the capless headphone out
 
 For connecting to external audio equipment, this configuration uses coupling capacitors with the HPL and HPR pins. This approach electrically isolates the Pisound Micro from other devices and allows the A01 pin to be repurposed as a line level MONOOUT.
 
+![Headphone Output with Capacitors](images/HP_Electrolytic_Caps.png)
+
 #### Wiring
 
 - **HPL (A03)**: Left channel (via coupling capacitor)
 - **HPR (A04)**: Right channel (via coupling capacitor)
 - **A01 (Optional)**: MONOOUT line level mono output (can be left unconnected if unused)
+
+Use `hp-out-mode=headphone` dtoverlay parameter.
 
 #### Selecting Capacitors
 
@@ -107,31 +115,25 @@ When choosing capacitors:
 
 For most applications, 220µF capacitors provide an excellent balance between performance, size, and cost.
 
-![Headphone Output with Capacitors](images/HP_Electrolytic_Caps.png)
+### HP Line Output Configuration
 
-### Line Output Configuration
+The headphone pins can alternatively function as an additional line output for connecting to external amplifiers or audio equipment. This configuration **requires external series capacitors** for proper electrical isolation.
 
-The headphone pins can alternatively function as an additional line output for connecting to external amplifiers or audio equipment.
+![Headphone Line Output with Capacitors](images/HP_Line_Out.png)
 
 #### Wiring
 
-- **HPL (A03)**: Line output left channel
-- **HPR (A04)**: Line output right channel
+- **HPL (A03)**: Line output left channel (via coupling capacitor)
+- **HPR (A04)**: Line output right channel (via coupling capacitor)
 - **AGND**: Ground reference (use audio ground, not VGND)
 
-#### Configuration:
+For guidance on selecting appropriate capacitor values, refer to the [Selecting Capacitors](#selecting-capacitors) section.
 
-This mode requires adjusting codec settings through ALSA mixer controls:
-
-1. Reduce the output level to line-level standards
-2. Disable headphone-specific processing
-3. Connect to line-level inputs on external equipment
-
-This configuration provides additional output options when you need more than the dedicated line outputs.
+Use `hp-out-mode=line` dtoverlay parameter.
 
 ## Line Input Configurations
 
-The line input pins can be configured in two different ways:
+The line input pins can be configured for differential or single-ended input. Additionally, the device supports microphone bias voltage (MicBias) for connecting condenser microphones without external power.
 
 ### Differential Line Input
 
@@ -140,7 +142,11 @@ The differential configuration uses:
 - **A15 & A16**: Differential Left channel (LINE_IN_L- and LINE_IN_L+)
 - **A13 & A14**: Differential Right channel (LINE_IN_R- and LINE_IN_R+)
 
+![Differential Line Input](images/Line_Diffferential_Input.png)
+
 This balanced input configuration provides superior noise immunity and is ideal for professional audio connections or noisy environments.
+
+Use `input-mode=differential` dtoverlay parameter (or omit, as it is the default value).
 
 ### Single-Ended Line Input
 
@@ -151,9 +157,21 @@ Alternatively, you can configure these pins as four separate single-ended inputs
 - **A13**: Single-Ended Input 3 (LINE_IN_R-)
 - **A14**: Single-Ended Input 4 (LINE_IN_R+)
 
+![Single Ended Line Input](images/Line_Single_Ended_Input.png)
+
 This allows connecting up to four mono audio sources simultaneously.
 
 *Note*: When using single-ended inputs, properly terminate any unused inputs to prevent noise.
+
+Use `input-mode=single-ended` dtoverlay parameter.
+
+### Mic Bias
+
+Pisound Micro includes a microphone bias voltage feature that can be enabled via the **MicBias** control in `alsamixer`. When activated, this provides a +3.3V bias voltage on the A16 (LINE_IN_L+) and A14 (LINE_IN_R+) pins through 1kΩ pull-up resistors. This feature is particularly useful for connecting electret condenser microphones and other microphone types that require an external voltage bias to operate. The bias voltage allows these microphones to function without needing separate power supplies or phantom power. Simply enable the MicBias control when connecting compatible microphones to these input pins.
+
+![Electret Condenser Microphone Input](images/Line_MicBias_Electret_Input.png)
+
+Use `input-mode=differential` dtoverlay parameter (or omit, as it is the default value). Make sure `MicBias` is enabled in `alsamixer`.
 
 ## Line Output Configurations
 
@@ -168,6 +186,10 @@ Professional balanced output using:
 
 This configuration offers the best noise rejection for professional applications.
 
+![Differential Line Output](images/Line_Diffferential_Output.png)
+
+The Line Output can be switched between driving line (10kΩ) or headphone (16Ω - 32Ω) loads via `line-out` dtoverlay parameter described below.
+
 ### Single-Ended Line Output
 
 Standard unbalanced stereo output:
@@ -177,6 +199,8 @@ Standard unbalanced stereo output:
 - **AGND**: Ground reference
 
 This configuration is compatible with most consumer audio equipment.
+
+![Single Ended Line Output](images/Line_Single_Ended_Output.png)
 
 ## Software Configuration
 

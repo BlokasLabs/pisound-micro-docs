@@ -12,7 +12,7 @@ The 1st goes through the practical examples of setting up various kinds of Eleme
 
 ### Quick Start
 
-Before you start, please make sure you have our `pollgpio` (todo: link to GitHub source code) utility installed:
+Before you start, please make sure you have our [`pollgpio`](https://github.com/BlokasLabs/pollgpio){target=_blank} utility installed:
 
 ```bash
 sudo apt install -y pollgpio

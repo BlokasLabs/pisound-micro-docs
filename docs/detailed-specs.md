@@ -71,19 +71,19 @@ The frequency response graphs below show how evenly Pisound Micro reproduces aud
 
 === "Headphone"
 
-    ![](images/audio/freq_hp.png)
+    ![Headphone Frequency Response Graph](images/audio/freq_hp.png)
 
     Measured with 30Ω load and 470µF electrolytic capacitors.
 
 === "Capless Headphone"
 
-    ![](images/audio/freq_capless_hp.png)
+    ![Capless Headphone Frequency Response Graph](images/audio/freq_capless_hp.png)
 
     Measured with 30Ω load.
 
 === "Line"
 
-    ![](images/audio/freq_line.png)
+    ![Line Frequency Response Graph](images/audio/freq_line.png)
 
     Measured with 10kΩ load,
 
@@ -93,19 +93,19 @@ Total Harmonic Distortion (THD) measures the amount of harmonic distortion prese
 
 === "Headphone"
 
-    ![](images/audio/thd_hp.png)
+    ![Headphone THD Graph](images/audio/thd_hp.png)
 
     Measured with 30Ω load and 470µF electrolytic capacitors.
 
 === "Capless Headphone"
 
-    ![](images/audio/thd_capless_hp.png)
+    ![Capless Headphone THD Graph](images/audio/thd_capless_hp.png)
 
     Measured with 30Ω load.
 
 === "Line"
 
-    ![](images/audio/thd_line.png)
+    ![Line THD Graph](images/audio/thd_line.png)
 
     Measured with 10kΩ load.
 

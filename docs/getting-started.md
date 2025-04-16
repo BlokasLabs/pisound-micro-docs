@@ -77,7 +77,7 @@ Find more details about the drawing [here](detailed-specs.md#mechanical-drawing)
 
 #### Audio
 
-The schematic below shows how to hook up audio jacks to Pisound Micro's A header. You may hook up only the connectors you plan to use. If you use connectors for input with normally closed contacts, connect AGND to the closed state pins.
+The schematic below shows how to hook up audio jacks to Pisound Micro's A header. For more detailed information about each port connection, see [Audio Connections](audio-connections.md). You may hook up only the connectors you plan to use. If you use connectors for input with normally closed contacts, connect AGND to the closed state pins.
 
 ![Audio Connections](images/Audio_Connections.png)
 
