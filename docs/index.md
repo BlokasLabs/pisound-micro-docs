@@ -45,7 +45,7 @@ Pisound Micro Mapper lets you write up a json config to define the connected con
 
 The Pisound Micro kernel module exposes all of the Pisound Micro I/O functionalities, including analog and encoder inputs, through a special location in `/sys/pisound-micro` - as it is all exposed through the sysfs file system, regular file utilities and commands such as `echo` and `cat` can be used for configuring the Pisound Micro, as well as any file system APIs / functionality available in your software / language of choice. See [Sysfs Interface](sysfs-interface.md) for more information.
 
-To make integration to new or existing programs quick and easy, there's `libpisoundmicro`, a C/C++ library with bindings to other languages such as Python, which exposes all the same functionality via a simple-to-use API. See [libpisoundmicro](libpisoundmicro.md) for more information.
+To make integration to new or existing programs quick and easy, there's `libpisoundmicro`, a C/C++ library with bindings to other languages such as Python, which exposes all the same functionality via a simple-to-use API. See [libpisoundmicro](libpisoundmicro/overview.md) for more information.
 
 ### Sysfs /sys/class/gpio
 

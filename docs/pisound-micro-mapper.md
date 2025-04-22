@@ -2,6 +2,8 @@
 
 Pisound Micro Mapper is a program running in the background that takes care of initializing Pisound Micro controls according to the provided configuration file and can also translate them to MIDI, Osc or other common audio software communication means as well as map them to the ALSA mixer controls.
 
+The [source code](https://github.com/BlokasLabs/pisound-micro-mapper){target=_blank} is licensed under GPL 2.0.
+
 ## Install
 
 Assuming that you're using Patchbox OS image, or have set up our [APT server](https://apt.blokas.io/){target=_blank}, run the following command to install:
@@ -44,7 +46,7 @@ Let's dive right in and look at a minimal, but complete, working configuration e
             }
         },
         "alsa": {
-            "hw:micro": [
+            "hw:pisoundmicro": [
                 "Digital Playback Volume"
             ]
         }
@@ -172,7 +174,7 @@ Here's all of the control properties as well as the enumerations for configuring
 The `alsa` object within the `controls` object is used to declare which ALSA mixer controls will be involved in the mappings. To discover the names of the ALSA mixer controls, run the following command:
 
 ```bash
-amixer -D hw:micro controls
+amixer -D hw:pisoundmicro controls
 ```
 
 It will output all of the control names, in particular, we're interested in the contents of `name='...'`, for example:
@@ -189,7 +191,7 @@ To bring these controls into Pisound Micro Mapper's attention, they can be decla
 ```json
 ...
 "alsa": {
-    "hw:micro": [
+    "hw:pisoundmicro": [
         "Digital Playback Volume",
         ["Digital Capture Volume", { "alias": "rec_vol" } ]
     ]

@@ -54,14 +54,15 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.magiclink
   - pymdownx.mark
-  - pymdownx.smartsymbols
+  - pymdownx.smartsymbols:
+      fractions: False
   - pymdownx.superfences
   - pymdownx.tasklist
   - pymdownx.tilde
   - footnotes:
       PLACE_MARKER: '///Footnotes Go Here///'
 
-copyright: '&copy; 2024 VILNIAUS BLOKAS UAB'
+copyright: '&copy; 2025 VILNIAUS BLOKAS UAB'
 
 nav:
   - Pisound Micro: index.md
@@ -71,10 +72,22 @@ nav:
   - Detailed Specs: detailed-specs.md
   - Pisound Micro Mapper: pisound-micro-mapper.md
   - Sysfs Interface: sysfs-interface.md
-  - libpisoundmicro: libpisoundmicro.md
+  - libpisoundmicro:
+      - Overview: libpisoundmicro/overview.md
+      - C API: libpisoundmicro/c.md
+      - C++ API: libpisoundmicro/cpp.md
+      - Python API: libpisoundmicro/python.md
   - Sysfs GPIO: sysfs-gpio.md
   - gpiod & libpgiod: gpiod-libgpiod.md
   - License: license.md
 
 plugins:
   - search
+  - mkdoxy:
+      projects:
+        libpisoundmicro:
+          src-dirs: libpisoundmicro
+          template-dir: mkdoxy_templates
+          doxy-cfg:
+            PROJECT_NAME: libpisoundmicro
+      #save-api: md_files

@@ -4,7 +4,7 @@ All of the GPIO I/O functionality of Pisound Micro is accessed through the sysfs
 
 Once an Element is created, it gets its own subdirectory under `/sys/pisound-micro/elements/` and provides a couple of files for reading & writing the value, as well as further configuration, like setting the minimum and maximum values.
 
-This page details interacting with the sysfs interface directly and provides a complete reference on the I/O functionalities of Pisound Micro. There's [libpisoundmicro](libpisoundmicro.md), a library encapsulating all of the available functionality of the sysfs interface in a straightforward C/C++ API with bindings to other languages and should be the preferred method for integrating Pisound Micro I/O functions into your own projects, whenever possible.
+This page details interacting with the sysfs interface directly and provides a complete reference on the I/O functionalities of Pisound Micro. There's [libpisoundmicro](libpisoundmicro/overview.md), a library encapsulating all of the available functionality of the sysfs interface in a straightforward C/C++ API with bindings to other languages and should be the preferred method for integrating Pisound Micro I/O functions into your own projects, whenever possible.
 
 The 1st goes through the practical examples of setting up various kinds of Elements, while the 2nd part is a complete Reference of the sysfs interface.
 
