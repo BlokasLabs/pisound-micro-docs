@@ -90,4 +90,4 @@ plugins:
           template-dir: mkdoxy_templates
           doxy-cfg:
             PROJECT_NAME: libpisoundmicro
-      #save-api: md_files
+      save-api: md_tmp_files
