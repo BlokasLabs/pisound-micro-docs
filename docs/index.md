@@ -1,6 +1,16 @@
 # Pisound Micro
 
-![Pisound Micro](images/Pisound_Micro.png){width=50% height=auto}
+<div class="desktop-display" markdown="1">
+
+![Pisound Micro](images/pisound-micro-front-desktop.jpg)
+
+</div>
+
+<div class="mobile-display" markdown="1">
+
+![Pisound Micro](images/pisound-micro-front-mobile.jpg)
+
+</div>
 
 Pisound Micro is a high quality, low latency sound card and MIDI interface with lots of I/O control capabilities for use with Raspberry Pi or compatible Single Board Computers and it is specifically designed to be integrated into your own projects. That means it uses the minimal amount of the 40 pin GPIO header pins, and provides an additional 37 GPIO signals for your use for things like encoders, buttons, potentiometers, LEDs, as well as it comes with no connectors presoldered, giving you the full freedom to lay out your project just like you want it.
 
