@@ -130,7 +130,19 @@ Pay attention that the output has a GND connection on its Pin 2 (the middle pin)
 
 If using minijacks, there's 3 ways on how to hook them up, pick one that's suited for the devices you intend to use it with. Our products are using Type A (MIDI Standard). Please refer to this excellent website for wiring diagrams: [https://minimidi.world/](https://minimidi.world/){target=_blank}
 
-## Initial Software Setup
+## Quick Software Setup
+
+To install the Pisound Micro software on Debian compatible distributions like Raspberry Pi OS or Patchbox OS, open a terminal (command) window and run:
+
+```sh
+curl https://blokas.io/pisound-micro/install.sh | sh
+```
+
+This will set up the Blokas APT server, install all the software packages for Pisound Micro, load the kernel module, and make the changes in config.txt so the Pisound Micro is ready to go every time the system starts.
+
+## Manual Software Setup
+
+The manual setup process described below accomplishes the same tasks as the automated script above, but broken down into individual steps. This approach is useful if you want more control over the installation process or need to troubleshoot specific components, or gain more understanding on what happens during the Pisound Micro installation.
 
 ### APT Server Setup
 
@@ -148,6 +160,7 @@ Before loading up the kernel module for Pisound Micro, it's recommended to insta
 the default software and configuration packages:
 
 ```sh
+sudo apt update
 sudo apt install pisound-micro
 ```
 
