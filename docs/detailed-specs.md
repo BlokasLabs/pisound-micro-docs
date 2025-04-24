@@ -85,7 +85,7 @@ The frequency response graphs below show how evenly Pisound Micro reproduces aud
 
     ![Line Frequency Response Graph](images/audio/freq_line.png)
 
-    Measured with 10kΩ load,
+    Measured with 10kΩ load.
 
 ### THD
 
