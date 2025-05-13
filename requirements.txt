@@ -10,5 +10,5 @@ mkdocs-plugin-commonmark==0.0.4
 mkdocs-redirects==1.2.2
 mkdocstrings==0.29.1
 mkdocstrings-python==1.16.10
-mkdoxy @ git+https://github.com/BlokasLabs/MkDoxy.git@1e3bd72d104b5fba5bd8addf98b8fe362f271f82
+mkdoxy @ git+https://github.com/BlokasLabs/MkDoxy.git@34800b3374891ec08959349a6dfa72bc1883a413
 pymdown-extensions==10.14.3

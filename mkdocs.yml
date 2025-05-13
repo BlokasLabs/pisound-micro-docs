@@ -76,7 +76,7 @@ nav:
       - Overview: libpisoundmicro/overview.md
       - C API: libpisoundmicro/c.md
       - C++ API: libpisoundmicro/cpp.md
-      - Python API: libpisoundmicro/python.md
+      - Python API: libpisoundmicro/python-api.md
   - Sysfs GPIO: sysfs-gpio.md
   - gpiod & libpgiod: gpiod-libgpiod.md
   - License: license.md
@@ -91,3 +91,15 @@ plugins:
           doxy-cfg:
             PROJECT_NAME: libpisoundmicro
       save-api: md_tmp_files
+  - mkdocstrings:
+      custom_templates: blokas-docs-theme/templates/mkdocstrings
+      handlers:
+        python:
+          options:
+            show_source: false
+            docstring_style: sphinx
+            show_root_heading: false
+            show_root_toc_entry: false
+            unwrap_annotated: false
+            heading_level: 3
+            show_bases: true
