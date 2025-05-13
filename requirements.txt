@@ -1,6 +1,17 @@
+babel==2.17.0
+backrefs==5.8
+certifi==2025.1.31
+charset-normalizer==3.4.1
+click==8.1.8
+colorama==0.4.6
+ghp-import==2.1.0
+griffe==1.7.2
+idna==3.10
 Jinja2==3.1.6
 Markdown==3.8
 MarkupSafe==3.0.2
+mergedeep==1.3.4
+mistletoe==1.4.0
 mkdocs==1.6.1
 mkdocs-autorefs==1.4.1
 mkdocs-get-deps==0.2.0
@@ -10,5 +21,20 @@ mkdocs-plugin-commonmark==0.0.4
 mkdocs-redirects==1.2.2
 mkdocstrings==0.29.1
 mkdocstrings-python==1.16.10
-mkdoxy @ git+https://github.com/BlokasLabs/MkDoxy.git@34800b3374891ec08959349a6dfa72bc1883a413
+mypy==1.15.0
+mypy_extensions==1.1.0
+packaging==25.0
+paginate==0.5.7
+pathspec==0.12.1
+platformdirs==4.3.7
+Pygments==2.19.1
 pymdown-extensions==10.14.3
+python-dateutil==2.9.0.post0
+PyYAML==6.0.2
+pyyaml_env_tag==0.1
+requests==2.32.3
+six==1.17.0
+typing_extensions==4.13.2
+urllib3==2.4.0
+watchdog==6.0.0
+mkdoxy @ git+https://github.com/BlokasLabs/MkDoxy.git@34800b3374891ec08959349a6dfa72bc1883a413
