@@ -32,6 +32,7 @@ extra:
       link: "https://twitter.com/blokaslabs"
     - icon: "fontawesome/brands/facebook"
       link: "https://www.facebook.com/blokaslabs/"
+  homepage: "https://blokas.io/pisound-micro/"
 repo_name: 'pisound-micro-docs'
 repo_url: 'https://github.com/BlokasLabs/pisound-micro-docs/'
 markdown_extensions:
